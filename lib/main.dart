@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:resq_map/core/constants.dart';
-import 'package:resq_map/features/home_page.dart';
+import 'package:resq_map/core/text_styles.dart';
+import 'package:resq_map/features/authentication/pages/login_view.dart';
+import 'package:resq_map/features/authentication/pages/sign_up_view.dart';
+
 
 
 void main() async {
@@ -15,7 +18,44 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        inputDecorationTheme: const InputDecorationTheme(
+        primaryColor: appThemeColor,
+        iconTheme: IconThemeData(
+          color: appThemeColor,),
+        inputDecorationTheme:  InputDecorationTheme(
+         
+          enabledBorder:OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: Colors.grey)
+          ) ,
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: Colors.grey)
+          ) ,
+          focusColor: appThemeColor,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color:appThemeColor)
+          ) ,
+          prefixStyle: TextStyle(color: Colors.grey),
+          prefixIconColor:WidgetStateColor.resolveWith(
+            (states) {
+              if(states.contains(WidgetState.focused)){
+                return appThemeColor;
+              }
+              return Colors.grey; 
+            },),
+            labelStyle:WidgetStateTextStyle.resolveWith(
+            (states) {
+              if(states.contains(WidgetState.focused)){
+                return TextStyles.textStyle18.copyWith(color:appThemeColor);
+              }
+              return TextStyles.textStyle18.copyWith(color: Colors.grey); 
+            },),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: Colors.grey)
+          ),
+  
             hintStyle: TextStyle(color: inactiveGray)),
         progressIndicatorTheme:
             const ProgressIndicatorThemeData(color: appThemeColor),
@@ -26,11 +66,9 @@ class MyApp extends StatelessWidget {
           ),
           backgroundColor: appThemeColor,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: appThemeColor),
-        useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      home:  LoginView(),
     );
   }
 }
