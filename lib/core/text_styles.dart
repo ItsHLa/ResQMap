@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' show TextStyle;
 
-class TextStyles {
+abstract class TextStyles {
   static TextStyle textStyle18 = TextStyle(fontSize: 18);
   static TextStyle textStyle16 = TextStyle(fontSize: 16);
   static TextStyle textStyle14 = TextStyle(fontSize: 14);
