@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/actions.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
-import 'package:resq_map/features/authentication/utils/otp_verify_view.dart';
+import 'package:resq_map/features/authentication/otp/widgets/otp_verify_view.dart';
 import 'package:resq_map/features/authentication/sign_up/pages/team_skills_page.dart';
 
 class EmailVerifyPage extends StatefulWidget {
@@ -28,17 +29,18 @@ class _EmailVerifyPageState extends State<EmailVerifyPage> {
           if (mounted) {
             Navigator.of(context).pop();
           }
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('New OTP sent successfully!')),
+          AppActions.showSnackBar(
+            title: 'New OTP Sent Successfully!',
+            context: context,
           );
+        
         }
         if (state is AuthError) {
-          if (mounted) {
-            Navigator.of(context).pop();
-          }
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.msg)));
+         AppActions.showSnackBar(
+            title: state.msg,
+            context: context,
+          );
+          
         }
       },
       child: Scaffold(

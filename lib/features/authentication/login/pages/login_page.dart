@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/actions.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
-import 'package:resq_map/features/authentication/utils/login_view.dart';
+import 'package:resq_map/features/authentication/login/widgets/login_view.dart';
 import 'package:resq_map/features/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,24 +18,20 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator()),
-          );
+          AppActions.showLoadingDialog(context);
         }
         if (state is AuthError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.msg)));
+          Navigator.of(context).pop();
+          AppActions.showSnackBar(title: state.msg, context: context);
         }
         if (state is AuthLogedIn) {
-          Navigator.of(context,).pushAndRemoveUntil(
+          Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => MyHomePage()),
-            (route) => false,);
+            (route) => false,
+          );
         }
       },
-      
+
       child: Scaffold(body: LoginView()),
     );
   }

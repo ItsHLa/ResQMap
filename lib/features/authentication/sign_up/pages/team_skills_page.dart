@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
+
 import 'package:resq_map/features/authentication/sign_up/widgets/team_skills_view.dart';
 import 'package:resq_map/features/home_page.dart';
+import 'package:resq_map/features/profile/cubit/profile_cubit.dart';
 
 class TeamSkillsPage extends StatefulWidget {
   const TeamSkillsPage({super.key});
@@ -14,32 +15,29 @@ class TeamSkillsPage extends StatefulWidget {
 class _TeamSkillsPageState extends State<TeamSkillsPage> {
   @override
   void initState() {
-    BlocProvider.of<AuthCubit>(context).getTeamSkills();
-    // TODO: implement initState
+    BlocProvider.of<ProfileCubit>(context).getTeamSkills();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        if (state is AuthLoadedTeamSkills) {
-          Navigator.of(context).pop();
-        }
-        if (state is AuthTeamSkillsPostSuccess) {
-          Navigator.of(
-            context,
-          ).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
+        print(state);
+
+        if (state is ProfileTeamSkillsPostSuccess) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MyHomePage()),
+          );
         }
       },
       builder: (context, state) {
-        Widget body;
-        if (state is AuthLoadedTeamSkills) {
+        Widget? body = Center(child: CircularProgressIndicator());
+        if (state is ProfileLoadedTeamSkills) {
           body = TeamsScreen(teams: state.skills);
-        } else if (state is AuthError) {
-          body = Center(child: Text("Something went wrong"));
-        } else {
-          body = Container();
+        }
+        if (state is ProfileError) {
+          body = Center(child: Text("Something went wrong! Try Again Later"));
         }
         return Scaffold(body: body);
       },

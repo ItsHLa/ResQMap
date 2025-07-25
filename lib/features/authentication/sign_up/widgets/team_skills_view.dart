@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/core/padding_constants.dart';
-import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
-import 'package:resq_map/features/authentication/model/team_skill_model/team.dart';
+import 'package:resq_map/features/profile/model/team.dart';
+import 'package:resq_map/features/profile/cubit/profile_cubit.dart';
 import 'team_card.dart';
 
 class TeamsScreen extends StatefulWidget {
@@ -70,7 +70,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
                         .map((e) => widget.teams[e].teamName)
                         .toList();
                 print(skills);
-                BlocProvider.of<AuthCubit>(
+                BlocProvider.of<ProfileCubit>(
                   context,
                 ).postTeamSkills({"skills": skills});
               },

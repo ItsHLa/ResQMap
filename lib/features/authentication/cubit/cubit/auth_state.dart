@@ -6,7 +6,7 @@ sealed class AuthState {}
 final class AuthInitial extends AuthState {}
 
 final class AuthEmailVerify extends AuthState {
-  final Map<String,dynamic>? data;
+  final Map<String, dynamic>? data;
 
   AuthEmailVerify({this.data});
 }
@@ -27,10 +27,12 @@ final class AuthError extends AuthState {
 
 final class AuthPasswordReset extends AuthState {}
 
-final class AuthLoadedTeamSkills extends AuthState {
-  final List<EmergencyTeam> skills;
+final class AuthChangePassword extends AuthState {}
 
-  AuthLoadedTeamSkills({required this.skills});
+final class AuthLoadedAudits extends AuthState {
+  final List<AuthAudit> audits;
+
+  AuthLoadedAudits({required this.audits});
 }
 
 final class AuthTeamSkillsPostSuccess extends AuthState {}

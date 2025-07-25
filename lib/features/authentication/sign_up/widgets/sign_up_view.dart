@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/constants.dart';
 import 'package:resq_map/core/padding_constants.dart';
 import 'package:resq_map/core/text_styles.dart';
 import 'package:resq_map/core/urls.dart';
@@ -30,6 +31,7 @@ class _SignUpViewState extends State<SignUpView> {
   late List<String> labels;
   late List<Widget> prefixes;
   late List validators;
+  bool obscureText = true;
   @override
   void initState() {
     signUpKey = GlobalKey<FormState>();
@@ -81,7 +83,7 @@ class _SignUpViewState extends State<SignUpView> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: "First Name",
-                    prefix: const Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline),
                   ),
                   controller: _firstNameController,
                   validator: (value) => value!.isEmpty ? 'Required' : null,
@@ -92,7 +94,7 @@ class _SignUpViewState extends State<SignUpView> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: "Last Name",
-                    prefix: const Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline),
                   ),
                   controller: _lastNameController,
                   validator: (value) => value!.isEmpty ? 'Required' : null,
@@ -107,8 +109,16 @@ class _SignUpViewState extends State<SignUpView> {
           bottom: PaddingConstants.spaceBtwInputFields,
         ),
         child: TextFormField(
+          obscureText: index == labels.length - 1 ? obscureText : false,
           controller: controllers[index],
           decoration: InputDecoration(
+              suffix: index == labels.length - 1 ? IconButton(
+              
+                onPressed: (){
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        }, icon: Icon(Icons.remove_red_eye_outlined, color: obscureText ? Colors.grey: appThemeColor  ,)): null,
             labelText: labels[index],
             prefixIcon: prefixes[index],
           ),

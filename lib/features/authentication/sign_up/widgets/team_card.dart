@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:resq_map/features/authentication/model/team_skill_model/team.dart';
+import 'package:resq_map/features/profile/model/team.dart';
 
 class TeamCard extends StatelessWidget {
   final EmergencyTeam team;

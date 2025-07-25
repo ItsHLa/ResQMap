@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
-import 'package:resq_map/features/authentication/utils/email_verify_page.dart';
+import 'package:resq_map/features/authentication/otp/pages/email_verify_page.dart';
 import 'package:resq_map/features/authentication/sign_up/widgets/sign_up_view.dart';
 
 class SignUpPage extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/core/constants.dart';
 import 'package:resq_map/core/padding_constants.dart';
 import 'package:resq_map/core/text_styles.dart';
+import 'package:resq_map/core/validators/password_validator.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
 import 'package:resq_map/features/authentication/reset_password/pages/email_step_page.dart';
 import 'package:resq_map/features/authentication/sign_up/pages/sign_up_page.dart';
@@ -20,6 +21,7 @@ class _LoginViewState extends State<LoginView> {
   late List validators;
   late GlobalKey<FormState> loginkey;
   late List controllers;
+  bool obscureText = true;
 
   @override
   void initState() {
@@ -36,19 +38,10 @@ class _LoginViewState extends State<LoginView> {
           return null;
         }
       },
-      (value) {
-        if (value == null) {
-          return "Password can't be empty";
-        } else if (value.isEmpty) {
-          return "Password can't be empty";
-        } else {
-          return null;
-        }
-      },
+      PasswordValidator.validate,
     ];
     loginkey = GlobalKey<FormState>();
     controllers = [TextEditingController(), TextEditingController()];
-    // TODO: implement initState
     super.initState();
   }
 
@@ -94,17 +87,21 @@ class _LoginViewState extends State<LoginView> {
                       bottom: PaddingConstants.spaceBtwInputFields,
                     ),
                     child: TextFormField(
+                      obscureText: index == 1 ? obscureText : false,
                       decoration: InputDecoration(
-                        // labelStyle: TextStyle(color: appThemeColor),
+                        
+                        suffix: index == 1 ? IconButton(onPressed: (){
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        }, icon: Icon(Icons.remove_red_eye_outlined)): null,
                         labelText: labels[index],
                         prefixIcon: prefixes[index],
                       ),
                       controller: controllers[index],
                       validator: validators[index],
                       onSaved: (value) {
-                        // setState(() {
-                        //   controllers[index].text = value ?? '';
-                        // });
+                       
                       },
                     ),
                   );

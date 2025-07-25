@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
 import 'package:resq_map/features/authentication/reset_password/widgets/email_step.dart';
-import 'package:resq_map/features/authentication/utils/email_verify_page.dart';
+import 'package:resq_map/features/authentication/otp/pages/email_verify_page.dart';
 
 class EmailStepPage extends StatefulWidget {
   const EmailStepPage({super.key});

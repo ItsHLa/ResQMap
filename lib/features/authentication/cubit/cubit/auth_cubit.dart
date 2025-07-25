@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:resq_map/core/http.dart';
 import 'package:resq_map/core/urls.dart';
-import 'package:resq_map/features/authentication/model/team_skill_model/team.dart';
+
+import 'package:resq_map/features/authentication/model/auth_audit.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
-import 'package:resq_map/features/authentication/model/user_models/user.dart';
 
 part 'auth_state.dart';
 
@@ -15,7 +15,10 @@ class AuthCubit extends Cubit<AuthState> {
     print(data);
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: url, body: {"email": data['email']});
+      var response = await HttpService.post(
+        uri: url,
+        body: {"email": data['email']},
+      );
       print(response);
       if (response["status"] == "200") {
         emit(AuthEmailVerify(data: data));
@@ -50,25 +53,14 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       var response = await HttpService.post(uri: signUpUrl, body: data);
 
-      User user = User(
-        firstName: data["first_name"],
-        lastName: data["last_name"],
-        email: data["email"],
-        password: data["password"],
-        phoneNumber: data["phone_number"],
-        userName: data["username"],
-      );
-
       if (response["status"] == "200") {
-        AuthService.saveUserData(user: user);
-
         AuthService.saveTokenData(
           refreshToken: response["body"]["refresh"],
           token: response["body"]["access"],
         );
         emit(AuthSignedUp());
       } else {
-        emit(AuthError(msg: response["body"]));
+        emit(AuthError(msg: response["body"]["error"]));
       }
     } catch (e) {
       emit(AuthError(msg: e.toString()));
@@ -96,45 +88,57 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> logOut(Map<String, dynamic> data) async {
+  Future<void> logOut() async {
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: logOutUrl, body: data);
-      emit(AuthLogedOut());
+      var refresh = await AuthService.getRefreshToken();
+      var token = await AuthService.getAuthToken();
+      var response = await HttpService.post(
+        token: token!,
+        uri: logOutUrl, body: {
+        "refresh" : refresh
+      });
+      if (response["status"] == "200") {
+        await AuthService.clearAllData();
+        emit(AuthLogedOut());
+      } else {
+        emit(AuthError(msg: response["body"]["error"]));
+      }
     } catch (e) {
       emit(AuthError(msg: e.toString()));
     }
   }
 
-  Future<void> getTeamSkills() async {
+  Future<void> getAuthAudit() async {
     emit(AuthLoading());
     try {
       String? token = await AuthService.getAuthToken();
-      var response = await HttpService.get(token: token, uri: getTeamSkillsUrl);
+      var response = await HttpService.get(token: token, uri: authAuditUrl);
 
       List result = response["body"];
-      List<EmergencyTeam> skills =
-          result.map((e) => EmergencyTeam.fromJson(e)).toList();
-      emit(AuthLoadedTeamSkills(skills: skills));
+      List<AuthAudit> audits =
+          result.map((e) => AuthAudit.fromJson(e)).toList();
+      emit(AuthLoadedAudits(audits: audits));
     } catch (e) {
       emit(AuthError(msg: e.toString()));
     }
   }
 
-  Future<void> postTeamSkills(var data) async {
+  Future<void> changePassword(Map<String, dynamic> data) async {
+    print(data);
     emit(AuthLoading());
     try {
       String? token = await AuthService.getAuthToken();
-      var response = await HttpService.put(
+      var response = await HttpService.post(
         token: token,
-        uri: postTeamSkillsUrl,
+        uri: changePasswordUrl,
         body: data,
       );
-
+      print(response);
       if (response["status"] == "200") {
-        emit(AuthTeamSkillsPostSuccess());
+        emit(AuthChangePassword());
       } else {
-        emit(AuthError(msg: response["body"]));
+        emit(AuthError(msg: response["body"]["error"]));
       }
     } catch (e) {
       emit(AuthError(msg: e.toString()));
