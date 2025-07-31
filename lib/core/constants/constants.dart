@@ -61,7 +61,7 @@ MaterialColor getDangerColor(String dangerLevel) {
         },
       );
     
-    case 'safe':
+    case 'safe' : 
       return const MaterialColor(
         0xFF388E3C,
         {
