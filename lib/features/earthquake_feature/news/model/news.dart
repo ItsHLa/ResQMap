@@ -16,13 +16,14 @@ class News {
   });
 
   factory News.fromJson(Map<String, dynamic> json) {
+    List time = json["time"].split(",");
     return News(
       lat: json["lat"],
       lon: json["lon"],
       mag: json["mag"].toDouble(),
       depth: json["depth"].toDouble(),
       place: json["place"],
-      time: json["time"],
+      time: "${time[0]} - ${time[2]}",
     );
   }
 }

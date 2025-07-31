@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:resq_map/features/earthquake_core/news/model/news.dart';
+import 'package:resq_map/features/earthquake_feature/news/model/news.dart';
 
-import 'package:resq_map/features/earthquake_core/news/widgets/quake_news_item.dart';
+import 'package:resq_map/features/earthquake_feature/news/widgets/quake_news_item.dart';
 
 class EarthquakesNewsView extends StatefulWidget {
   const EarthquakesNewsView({super.key, required this.news});
@@ -15,6 +15,8 @@ class _EarthquakesNewsViewState extends State<EarthquakesNewsView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.zero,
+       shrinkWrap: true,
       itemCount: widget.news.length,
       itemBuilder:
           (context, index) => QuakeNewsItem(
