@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/core/actions.dart';
+import 'package:resq_map/core/services/actions.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
 import 'package:resq_map/features/authentication/login/widgets/login_view.dart';
-import 'package:resq_map/features/home_page.dart';
+import 'package:resq_map/features/home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

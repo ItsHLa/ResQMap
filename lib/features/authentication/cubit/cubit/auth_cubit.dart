@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:resq_map/core/http.dart';
-import 'package:resq_map/core/urls.dart';
+import 'package:resq_map/core/services/http.dart';
+import 'package:resq_map/core/services/urls.dart';
 
 import 'package:resq_map/features/authentication/model/auth_audit.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';

@@ -28,17 +28,11 @@ class RAppBar extends StatelessWidget implements PreferredSizeWidget {
     return ClipPath(
       clipper: RCustomCurvedEdges(),
       child: AppBar(
-        
-        bottom: PreferredSize(
-        preferredSize: preferredSize, 
-        child: bottom != null ? bottom! : SizedBox()),
+        bottomOpacity: 1,
+        flexibleSpace: bottom ,
         title: title!=null ? Text(
           title!,
-          style: const TextStyle(
-            color: softWhite,
-            letterSpacing: 0.1,
-            fontWeight: FontWeight.w300,
-          ),
+          
         ) : widgetTitle,
         centerTitle: centerTitle,
         backgroundColor: appThemeColor,
@@ -53,5 +47,5 @@ class RAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>  Size.fromHeight(appBarHeight ?? kToolbarHeight + 50);
+  Size get preferredSize =>  Size.fromHeight( (kToolbarHeight + 50) + (bottom != null ? 90 : 0));
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/core/padding_constants.dart';
+import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/features/profile/model/team.dart';
 import 'package:resq_map/features/profile/cubit/profile_cubit.dart';
 import 'team_card.dart';

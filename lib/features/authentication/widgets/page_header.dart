@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:resq_map/core/constants.dart';
-import 'package:resq_map/core/padding_constants.dart';
+import 'package:resq_map/core/constants/constants.dart';
+import 'package:resq_map/core/constants/padding_constants.dart';
 
 class PageHeader extends StatelessWidget {
   const PageHeader({super.key, required this.titles});

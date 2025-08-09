@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/core/actions.dart';
+import 'package:resq_map/core/services/actions.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
 import 'package:resq_map/features/authentication/otp/widgets/otp_verify_view.dart';
 import 'package:resq_map/features/authentication/sign_up/pages/team_skills_page.dart';

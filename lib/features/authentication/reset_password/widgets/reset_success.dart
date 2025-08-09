@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resq_map/core/padding_constants.dart';
-import 'package:resq_map/core/text_styles.dart';
+import 'package:resq_map/core/constants/padding_constants.dart';
+import 'package:resq_map/core/constants/text_styles.dart';
 
 class ResetSuccessScreen extends StatelessWidget {
   const ResetSuccessScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/core/constants.dart';
-import 'package:resq_map/core/padding_constants.dart';
-import 'package:resq_map/core/text_styles.dart';
+import 'package:resq_map/core/constants/constants.dart';
+import 'package:resq_map/core/constants/padding_constants.dart';
+import 'package:resq_map/core/constants/text_styles.dart';
 import 'package:resq_map/core/validators/password_validator.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
 import 'package:resq_map/features/authentication/reset_password/pages/email_step_page.dart';
