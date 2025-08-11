@@ -1,33 +1,35 @@
+// ignore_for_file: constant_identifier_names
+
 const baseUrlHttps = "https://resq-zqbn.onrender.com";
 const baseUrlWss = 'wss://resq-zqbn.onrender.com';
 
 abstract class Urls {
   // News
-static const QUACK_NEWS_URL = "$baseUrlHttps/api/aware/news/";
+  static const QUACK_NEWS_URL = "$baseUrlHttps/api/aware/news/";
   // Alerts
-static const GET_ALERT_URL = '$baseUrlWss/ws/alerts/emergency/';
-static const POST_ASSIST_URL = "$baseUrlHttps/api/alerts/assist/";
-static const  INFO_ALERT_URL = "$baseUrlHttps/api/alerts/get/info/";
-static const TRAK_LOCATION_URL = "$baseUrlHttps/api/alerts/location/track/";
-static const MARK_SAFE_URL = "$baseUrlHttps/api/profiles/mark/safe/";
-}
+  static const GET_ALERT_URL = '$baseUrlWss/ws/alerts/emergency/';
+  static const POST_ASSIST_URL = "$baseUrlHttps/api/alerts/assist/";
+  static const INFO_ALERT_URL = "$baseUrlHttps/api/alerts/get/info/";
+  static const TRAK_LOCATION_URL = "$baseUrlHttps/api/alerts/location/track/";
+  static const MARK_SAFE_URL = "$baseUrlHttps/api/profiles/mark/safe/";
 
-// Auth
-const signUpUrl = '$baseUrlHttps/api/auth/signup/emergency/';
-const logInUrl = '$baseUrlHttps/api/auth/login/';
-const logOutUrl = '$baseUrlHttps/api/auth/logout/';
-const requestResetUrl = "$baseUrlHttps/api/auth/otp/generate/reset/";
-const resetCompleteUrl = "$baseUrlHttps/api/auth/password/reset/";
-const verifyEmailUrl = "$baseUrlHttps/api/auth/otp/generate/signup/";
-const getTeamSkillsUrl = "$baseUrlHttps/api/profiles/team/skills/get/";
-const postTeamSkillsUrl = "$baseUrlHttps/api/profiles/team/skills/post/";
+  // Auth
+  static const SIGN_UP_URL = '$baseUrlHttps/api/auth/signup/emergency/';
+  static const LOGIN_URL = '$baseUrlHttps/api/auth/login/';
+  static const LOG_OUT_URL = '$baseUrlHttps/api/auth/logout/';
+  static const REQUEST_RESET_URL = "$baseUrlHttps/api/auth/otp/generate/reset/";
+  static const RESET_COMPLETE_URL = "$baseUrlHttps/api/auth/password/reset/";
+  static const VERIFY_EMAIL_URL = "$baseUrlHttps/api/auth/otp/generate/signup/";
+  static const GET_TEAM_SKILLS_URL =
+      "$baseUrlHttps/api/profiles/team/skills/get/";
+  static const POST_TEAM_SKILLS_URL =
+      "$baseUrlHttps/api/profiles/team/skills/post/";
+
+  static const GET_USER_STATUS = "$baseUrlHttps/api/profiles/user/status/";
+}
 
 //Auth Audit
 const authAuditUrl = "$baseUrlHttps/api/auth/audit/";
-
-
-
-
 
 //Profile
 const getProfileUrl = "$baseUrlHttps/api/profiles/";

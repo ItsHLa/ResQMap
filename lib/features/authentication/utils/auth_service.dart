@@ -1,10 +1,9 @@
 import 'package:hive/hive.dart';
 import 'package:resq_map/features/authentication/model/token_models/token.dart';
-// import 'package:resq_map/features/profile/model/user.dart';
 import 'package:resq_map/features/authentication/utils/key_manager.dart' show KeyManager;
 
 class AuthService {
-  // static const String _userBoxName = 'userBox';
+  
   static const String _tokenBoxName = 'tokenBox';
   static const String _authTokenKey = 'auth_token';
   static const String _refreshTokenKey = 'refresh_token';
@@ -15,9 +14,7 @@ class AuthService {
     await KeyManager.init();
   }
 
-  // static Future<Box<User>> _openUserBox() async {
-  //   return await Hive.openBox<User>(_userBoxName);
-  // }
+ 
 
   static Future<Box> _openTokenBox() async {
     final key = await KeyManager.getOrCreateKey();

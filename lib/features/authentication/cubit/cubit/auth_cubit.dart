@@ -34,7 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
     print(data);
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: resetCompleteUrl, body: data);
+      var response = await HttpService.post(uri: Urls.RESET_COMPLETE_URL, body: data);
 
       print(response);
       if (response["status"] == "200") {
@@ -51,7 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
     print(data);
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: signUpUrl, body: data);
+      var response = await HttpService.post(uri: Urls.SIGN_UP_URL, body: data);
 
       if (response["status"] == "200") {
         AuthService.saveTokenData(
@@ -71,7 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
     print(data);
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: logInUrl, body: data);
+      var response = await HttpService.post(uri: Urls.LOGIN_URL, body: data);
 
       print(response);
       if (response["status"] == "200") {
@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthState> {
       var token = await AuthService.getAuthToken();
       var response = await HttpService.post(
         token: token!,
-        uri: logOutUrl, body: {
+        uri: Urls.LOG_OUT_URL, body: {
         "refresh" : refresh
       });
       if (response["status"] == "200") {

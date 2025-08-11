@@ -142,7 +142,7 @@ class _SignUpViewState extends State<SignUpView> {
                 });
                 BlocProvider.of<AuthCubit>(
                   context,
-                ).generateOTP(verifyEmailUrl, {
+                ).generateOTP(Urls.VERIFY_EMAIL_URL, {
                   "first_name": _firstNameController.text,
                   "last_name": _lastNameController.text,
                   "username": controllers[0].text,

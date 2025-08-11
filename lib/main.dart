@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:resq_map/core/constants.dart';
-import 'package:resq_map/core/text_styles.dart';
-import 'package:resq_map/features/alerts/alerts_cubit/alerts_cubit.dart';
-import 'package:resq_map/features/authentication/pages/login_page.dart';
-import 'package:resq_map/features/authentication/sign_up/pages/team_skills_page.dart';
-import 'package:resq_map/features/authentication/sign_up/widgets/team_skills_view.dart';
+import 'package:resq_map/core/constants/themes.dart';
+import 'package:resq_map/core/services/fierbase_notifications.dart';
+import 'package:resq_map/features/earthquake/cubit/quake_cubit.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
 import 'package:resq_map/features/authentication/cubit/cubit/auth_cubit.dart';
+import 'package:resq_map/features/home/cubit/cubit/settings_cubit.dart';
+import 'package:resq_map/features/home/settings_service.dart';
+import 'package:resq_map/features/map_and_location/cubit/map_cubit.dart';
+import 'package:resq_map/features/profile/cubit/profile_cubit.dart';
+import 'package:resq_map/features/safty/cubit/safty_cubit.dart';
+import 'package:resq_map/features/splash/pages/splash_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await FirebaseNotificationService.initialize();
+
   await Hive.initFlutter();
+  await SettingsService.init();
   await AuthService.init();
 
+  SettingsService.trackLocation = await SettingsService.getTrackingLocation() ?? false;
+  SettingsService.darkMode = await SettingsService.getDarkMode() ?? false;
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -28,93 +42,23 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<WebSocketCubit>(create: (context) => WebSocketCubit()),
         BlocProvider<AuthCubit>(create: (context) => AuthCubit()),
+        BlocProvider<MapCubit>(create: (context) => MapCubit()),
+        BlocProvider<ProfileCubit>(create: (context) => ProfileCubit()),
+        BlocProvider<SaftyCubit>(create: (context) => SaftyCubit()),
+        BlocProvider<SettingsCubit>(create: (context) => SettingsCubit()),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          // checkboxTheme: CheckboxThemeData(
-          //   fillColor: WidgetStateColor.resolveWith((states) {
-          //     if (states.contains(WidgetState.selected)) {
-          //       return appThemeColor;
-          //     }
-          //     return Colors.grey;
-          //   }),
-          // ),
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          return MaterialApp(
+            darkTheme:
+                state is DarkModeNight
+                    ? AppTheme.darkTheme
+                    : AppTheme.mainTheme,
 
-        
-
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: appThemeColor,
-            selectionColor: Colors.red.shade200,
-            selectionHandleColor: appThemeColor
-          ),
-        
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              foregroundColor: appThemeColor
-            )
-          ),
-          elevatedButtonTheme:ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 50),
-              padding:  EdgeInsets.symmetric(vertical: 16.0),
-              textStyle: TextStyle(color: softWhite),
-              backgroundColor: appThemeColor,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-            )
-          ) ,
-         
-          primaryColor: appThemeColor,
-          iconTheme: IconThemeData(color: appThemeColor),
-          inputDecorationTheme: InputDecorationTheme(
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusColor: appThemeColor,
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: appThemeColor),
-            ),
-            prefixStyle: TextStyle(color: Colors.grey),
-            prefixIconColor: WidgetStateColor.resolveWith((states) {
-              if (states.contains(WidgetState.focused)) {
-                return appThemeColor;
-              }
-              return Colors.grey;
-            }),
-            labelStyle: WidgetStateTextStyle.resolveWith((states) {
-              if (states.contains(WidgetState.focused)) {
-                return TextStyles.textStyle18.copyWith(color: appThemeColor);
-              }
-              return TextStyles.textStyle18.copyWith(color: Colors.grey);
-            }),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-
-            hintStyle: TextStyle(color: inactiveGray),
-          ),
-          progressIndicatorTheme: const ProgressIndicatorThemeData(
-            color: appThemeColor,
-          ),
-          dividerTheme: const DividerThemeData(color: inactiveGray),
-          appBarTheme: const AppBarTheme(
-            iconTheme: IconThemeData(color: softWhite),
-            backgroundColor: appThemeColor,
-          ),
-        ),
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: LoginPage(),
-        ),
+            debugShowCheckedModeBanner: false,
+            home: SplashView(),
+          );
+        },
       ),
     );
   }

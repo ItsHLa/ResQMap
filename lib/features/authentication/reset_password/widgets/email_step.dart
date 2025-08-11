@@ -21,7 +21,7 @@ class _EmailStepViewState extends State<EmailStepView> {
   final _emailController = TextEditingController();
   void _requestOTP() {
     BlocProvider.of<AuthCubit>(context).generateOTP(
-      requestResetUrl,
+      Urls.REQUEST_RESET_URL,
       {"email": _emailController.text});
   }
 

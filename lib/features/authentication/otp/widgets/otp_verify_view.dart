@@ -118,7 +118,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     print(widget.userData);
     BlocProvider.of<AuthCubit>(
       context,
-    ).generateOTP(requestResetUrl, widget.userData);
+    ).generateOTP(Urls.REQUEST_RESET_URL, widget.userData);
 
     if (BlocProvider.of(context).state is AuthEmailVerify) {
       _startCooldown();
