@@ -114,10 +114,7 @@ abstract class GeolocatorService {
     LocationAccuracy accuracy = LocationAccuracy.bestForNavigation,
     int distanceFilter = 100,
   }) async {
-    String result = await requestAlwaysLocation(context);
-
-    print(result);
-
+   
     print("start tracking");
     LocationSettings androidLocationSettings = AndroidSettings(
       accuracy: accuracy,

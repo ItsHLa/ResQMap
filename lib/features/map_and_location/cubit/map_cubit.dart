@@ -24,7 +24,10 @@ class MapCubit extends Cubit<MapState> {
         token: token,
         uri: routeUrl,
         body: {
-          "start": {"lat": start.latitude.toStringAsFixed(4), "lon": start.longitude.toStringAsFixed(4)},
+          "start": {
+            "lat": start.latitude.toStringAsFixed(4),
+            "lon": start.longitude.toStringAsFixed(4),
+          },
           "end": {"lat": lat.toStringAsFixed(4), "lon": lon.toStringAsFixed(4)},
         },
       );
@@ -47,8 +50,10 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
-  Future<void> trackLocation({required double lat, required double lon}) async {
+  Future<void> trackLocation({required Position position}) async {
     String? token = await AuthService.getAuthToken();
+    final lat = position.latitude.toStringAsFixed(4);
+    final lon = position.longitude.toStringAsFixed(4);
 
     var response = await HttpService.post(
       token: token,

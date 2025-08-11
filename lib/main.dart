@@ -26,16 +26,21 @@ void main() async {
   await SettingsService.init();
   await AuthService.init();
 
-  SettingsService.trackLocation = await SettingsService.getTrackingLocation() ?? false;
+  SettingsService.trackLocation =
+      await SettingsService.getTrackingLocation() ?? false;
   SettingsService.darkMode = await SettingsService.getDarkMode() ?? false;
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  bool darkMode = false;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -45,21 +50,31 @@ class MyApp extends StatelessWidget {
         BlocProvider<MapCubit>(create: (context) => MapCubit()),
         BlocProvider<ProfileCubit>(create: (context) => ProfileCubit()),
         BlocProvider<SaftyCubit>(create: (context) => SaftyCubit()),
-        BlocProvider<SettingsCubit>(create: (context) => SettingsCubit()),
+        BlocProvider<SettingsCubit>(
+          create: (context) => SettingsCubit()..getSettings(),
+        ),
       ],
-      child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) {
-          return MaterialApp(
+      child: BlocConsumer<SettingsCubit, SettingsState>(
+        listener: (context, state) {
+          if (state is AppSettings) {
+            setState(() {
+              darkMode = state.darkMode;
+            });
+          }
+          if (state is DarkModeNight) {
+            setState(() {
+              darkMode = true;
+            });
+          }
+        },
+        builder: (context, state) =>  MaterialApp(
             darkTheme:
-                state is DarkModeNight
+                darkMode
                     ? AppTheme.darkTheme
                     : AppTheme.mainTheme,
 
             debugShowCheckedModeBanner: false,
-            home: SplashView(),
+            home: SplashView(),))
           );
-        },
-      ),
-    );
-  }
-}
+        }}
+
