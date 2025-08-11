@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/core_widgets/loading_widget.dart';
 import 'package:resq_map/core/services/actions.dart';
 import 'package:resq_map/core/core_widgets/appBar.dart';
 import 'package:resq_map/core/constants/padding_constants.dart';
@@ -173,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   )
                   : state is ProfileLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? LoadingAnimation()
                   : Container(color: Colors.red),
         );
       },

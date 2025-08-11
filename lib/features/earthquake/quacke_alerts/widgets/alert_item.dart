@@ -155,10 +155,11 @@ class AlertItem extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton.icon(
-                      icon: const Icon(Icons.map, size: 18),
-                      label: const Text('View Map'),
+                      icon:  Icon(Icons.map, size: 18),
+                      label:  Text('View Map'),
                       style: FilledButton.styleFrom(
                         backgroundColor: dangerColor,
+                        foregroundColor: softWhite,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () => _navigateToMap(context),

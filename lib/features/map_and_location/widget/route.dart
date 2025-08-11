@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/core_widgets/loading_widget.dart';
 import 'package:resq_map/core/services/actions.dart';
 import 'package:resq_map/core/constants/constants.dart';
 
@@ -49,7 +50,7 @@ class _RoutePageState extends State<RoutePage> {
                   path: state.route.path,
                 )
                 : state is MapLoading
-                ? Center(child: Text("Loading >>>"))
+                ? LoadingAnimation()
                 : Center(child: Text("SomeThing Went Wrong!")));
       },
     );

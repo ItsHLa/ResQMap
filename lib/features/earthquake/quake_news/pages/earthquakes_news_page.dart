@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/core/core_widgets/appBar.dart';
 import 'package:resq_map/core/constants/constants.dart';
+import 'package:resq_map/core/core_widgets/loading_widget.dart';
 import 'package:resq_map/features/earthquake/cubit/quake_cubit.dart';
 import 'package:resq_map/features/earthquake/quake_news/widgets/earthquakes_news_view.dart';
 
@@ -40,7 +41,7 @@ class _EarthquakesNewsPageState extends State<EarthquakesNewsPage> {
           builder: (context, state) {
             
             if (state is Loading) {
-              return const Center(child: Text("Loading >>>"));
+              return const Center(child: LoadingAnimation());
             } else if (state is GetNewsSuccess) {
               return EarthquakesNewsView(news: state.news);
             } else {

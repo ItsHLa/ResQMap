@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resq_map/core/constants/constants.dart';
 import 'package:resq_map/core/core_widgets/appBar.dart';
+import 'package:resq_map/core/core_widgets/loading_widget.dart';
 import '../../cubit/quake_cubit.dart';
 import '../widgets/alert_listview.dart';
 
@@ -29,6 +31,7 @@ class _AlertsPageState extends State<AlertsPage> {
         title:"Nearby Alerts",
         actions: [Icon(Icons.nearby_error_outlined, size: 30,),],),
       body: RefreshIndicator(
+        color: appThemeColor,
         onRefresh: _refreshData,
         child: BlocBuilder<WebSocketCubit, WebSocketState>(
           builder: (context, state) {
@@ -44,7 +47,7 @@ class _AlertsPageState extends State<AlertsPage> {
                     )
                   : AlertListView(alerts: state.alerts);
             } else if (state is WebSocketLoading || state is WebSocketConnecting) {
-              content = const Center(child: Text("Loading >>>"));
+              content = const LoadingAnimation();
             } else {
               content = Center(
                 child: Text(

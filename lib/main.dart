@@ -66,6 +66,11 @@ class _MyAppState extends State<MyApp> {
               darkMode = true;
             });
           }
+          if (state is DarkModeLight) {
+            setState(() {
+              darkMode = false;
+            });
+          }
         },
         builder: (context, state) =>  MaterialApp(
             darkTheme:
