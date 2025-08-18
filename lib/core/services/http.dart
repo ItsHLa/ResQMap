@@ -107,14 +107,14 @@ class HttpService {
 
     try {
       var response = await http.get(url, headers: headers);
-      print(response.body);
+      // print(response.body);
       var result = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         return {"status": "200", "body": result};
       } else {
         print("ERROR: ${response.statusCode}");
-        print(response.body);
+        // print(response.body);
         return {"status": "400", "body": result};
       }
     } catch (e) {

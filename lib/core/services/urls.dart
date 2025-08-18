@@ -11,7 +11,11 @@ abstract class Urls {
   static const POST_ASSIST_URL = "$baseUrlHttps/api/alerts/assist/";
   static const INFO_ALERT_URL = "$baseUrlHttps/api/alerts/get/info/";
   static const TRAK_LOCATION_URL = "$baseUrlHttps/api/alerts/location/track/";
-  static const MARK_SAFE_URL = "$baseUrlHttps/api/profiles/mark/safe/";
+  static const MARK_SAFE_URL = "$baseUrlHttps/api/profiles/mark/status/";
+  static const GET_DAMAGED_USERS_URL =
+      "$baseUrlHttps/api/alerts/users/damaged/get/?q=";
+  static const POST_DAMAGED_USER_RESQUED_URL =
+      "$baseUrlHttps/api/alerts/users/damaged/mark/";
 
   // Auth
   static const SIGN_UP_URL = '$baseUrlHttps/api/auth/signup/emergency/';
@@ -24,8 +28,12 @@ abstract class Urls {
       "$baseUrlHttps/api/profiles/team/skills/get/";
   static const POST_TEAM_SKILLS_URL =
       "$baseUrlHttps/api/profiles/team/skills/post/";
-
+      
+  //Safty
   static const GET_USER_STATUS = "$baseUrlHttps/api/profiles/user/status/";
+  static const GET_SAFTY_USERS = "$baseUrlHttps/api/profiles/safty/";
+  static const DELETE_FROM_MY_SAFTY = "$baseUrlHttps/api/profiles/safty/remove/";
+  static const ADD_TO_MY_SAFTY = "$baseUrlHttps/api/profiles/safty/add/";
 }
 
 //Auth Audit

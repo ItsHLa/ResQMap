@@ -130,7 +130,7 @@ class _AboutPageViewState extends State<AboutPageView> {
               ),
 
               _buildSectionHeader('Skills'),
-              SkillSection(skill: widget.user.skills),
+              SkillSection(skill: widget.user.skills!),
               SizedBox(height: 20),
             ],
           ),

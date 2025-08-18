@@ -23,7 +23,7 @@ class Alert {
   String? dangerLevel;
   String? teamStatus;
   List? tags;
-  int? totalDamagedUsers;
+  String? totalDamagedUsers;
   DateTime? updatedAt;
 
   Alert({
@@ -45,8 +45,8 @@ class Alert {
       location: Location.fromJson(json["location"]),
       dangerLevel: json["danger_level"].toString(),
       teamStatus: json["team_status"],
-      totalDamagedUsers: json["damaged_users"],
-      updatedAt: DateTime.parse(json["updated_at"])
+      // totalDamagedUsers: json["damaged_users"].toString(),
+      // updatedAt: DateTime.parse(json["updated_at"])
     );
   }
 }

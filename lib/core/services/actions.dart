@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:resq_map/core/constants/constants.dart';
 
 abstract class AppActions {
   static void showLoadingDialog(BuildContext context) {
     showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) =>  Center(child: CircularProgressIndicator()),
+            builder: (context) =>  Center(child: CircularProgressIndicator(color: appThemeColor,)),
           );
   }
   static void showSnackBar({

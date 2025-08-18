@@ -71,13 +71,13 @@ class LocalNotificationService {
     final action = response.actionId;
     switch (action) {
       case 'safe':
-        HttpQuakeRequests.markSafe(true);
+        HttpQuakeRequests.markStatus("Safe");
         break;
       case 'sos':
-        HttpQuakeRequests.markSafe(false);
+        HttpQuakeRequests.markStatus("UnSafe");
         break;
       default:
-        HttpQuakeRequests.markSafe(true);
+        HttpQuakeRequests.markStatus("Unknown");
       // Handle main notification tap
     }
   }

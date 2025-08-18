@@ -5,10 +5,25 @@ sealed class WebSocketState {}
 
 final class Loading extends WebSocketState {}
 
+final class LoadingDamaged extends WebSocketState {}
+
 final class Success extends WebSocketState {}
 
+final class GetDamagedUsersSuccess extends WebSocketState {
+  final List<User> damagedUsers;
+  final bool markedRescued;
+
+  GetDamagedUsersSuccess({required this.damagedUsers, this.markedRescued=false});
+}
+
+final class MarkDamagedUsersRescuedSuccess extends WebSocketState {
+  final List<User> damagedUsers;
+
+  MarkDamagedUsersRescuedSuccess({required this.damagedUsers});
+}
+
 final class GetNewsSuccess extends WebSocketState {
- final List<News> news;
+  final List<News> news;
 
   GetNewsSuccess({required this.news});
 }
@@ -40,4 +55,3 @@ class WebSocketError extends WebSocketState {
   final String message;
   WebSocketError(this.message);
 }
-

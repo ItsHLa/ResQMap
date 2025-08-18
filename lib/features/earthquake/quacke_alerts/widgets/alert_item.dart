@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:resq_map/core/constants/constants.dart';
 import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/models/alert_model.dart';
+import 'package:resq_map/features/earthquake/quacke_alerts/pages/damaged_user_page.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/pages/team_status_page.dart';
 import 'package:resq_map/features/map_and_location/widget/route.dart';
 
@@ -22,8 +23,16 @@ class AlertItem extends StatelessWidget {
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder:
+                  (context) => DamagedUserPage(locationId: alert.location!.id),
+            ),
+          );
+        },
         borderRadius: BorderRadius.circular(12),
-        
+
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -155,8 +164,8 @@ class AlertItem extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton.icon(
-                      icon:  Icon(Icons.map, size: 18),
-                      label:  Text('View Map'),
+                      icon: Icon(Icons.map, size: 18),
+                      label: Text('View Map'),
                       style: FilledButton.styleFrom(
                         backgroundColor: dangerColor,
                         foregroundColor: softWhite,
@@ -178,17 +187,11 @@ class AlertItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          size: 16,
-          color: Colors.blueGrey,
-        ),
+        Icon(icon, size: 16, color: Colors.blueGrey),
         const SizedBox(width: 4),
         Text(
           text,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color:Colors.blueGrey,
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: Colors.blueGrey),
         ),
       ],
     );
@@ -212,7 +215,6 @@ class AlertItem extends StatelessWidget {
     );
   }
 
- 
   String _formatTime(DateTime? dateTime) {
     if (dateTime == null) return '--:--';
     final timeFormat = TimeOfDay.fromDateTime(dateTime);

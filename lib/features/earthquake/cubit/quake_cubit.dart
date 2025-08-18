@@ -8,6 +8,7 @@ import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/web_socket_channels.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
 import 'package:resq_map/features/earthquake/quake_news/model/news.dart';
+import 'package:resq_map/features/profile/model/user.dart';
 import '../../../core/services/urls.dart';
 import '../quacke_alerts/models/alert_model.dart';
 part 'quake_state.dart';
@@ -48,6 +49,27 @@ class WebSocketCubit extends Cubit<WebSocketState> {
 
       if (response["status"] == "200") {
         emit(Success());
+      } else {
+        emit(Error(response["body"]));
+      }
+    } catch (e) {
+      emit(Error(e.toString()));
+    }
+  }
+
+  Future<void> postDamagedUserStatus({required int userId, required List<User> users}) async {
+    emit(LoadingDamaged());
+    try {
+      String? token = await AuthService.getAuthToken();
+      var response = await HttpService.post(
+        token: token,
+        uri: Urls.POST_DAMAGED_USER_RESQUED_URL,
+        body: {"user_id" :userId },
+      );
+
+      if (response["status"] == "200") {
+        List<User> result = users.where((element) =>element.id != userId ,).toList();
+        emit(GetDamagedUsersSuccess(damagedUsers:result,markedRescued: true));
       } else {
         emit(Error(response["body"]));
       }
@@ -110,23 +132,27 @@ class WebSocketCubit extends Cubit<WebSocketState> {
     }
   }
 
-  Future<void> getAlertInfo(String id) async {
+  Future<void> getDamagedUsers(String? location_id) async {
     emit(Loading());
     try {
       String? token = await AuthService.getAuthToken();
       var response = await HttpService.get(
-        uri: "${Urls.INFO_ALERT_URL}?id=$id",
+        uri: "${Urls.GET_DAMAGED_USERS_URL}$location_id",
         token: token,
       );
 
       if (response["status"] == "200") {
         print(response["body"]);
+        List result = response["body"];
+        final damagedUsers =
+            result.map((json) => User.fromJson(json)).toList();
 
-        emit(Success());
+        emit(GetDamagedUsersSuccess(damagedUsers: damagedUsers));
       } else {
-        emit(Error('SomeThing Went Wrong, Try Again Later.'));
+        emit(Error('Check Your Internet Connection'));
       }
     } catch (e) {
+      print(e.toString());
       emit(Error('SomeThing Went Wrong, Check Your Internet Connection.'));
     }
   }
@@ -156,7 +182,6 @@ class WebSocketCubit extends Cubit<WebSocketState> {
     }
   }
 
- 
   @override
   Future<void> close() {
     _messageSubscription?.cancel();
