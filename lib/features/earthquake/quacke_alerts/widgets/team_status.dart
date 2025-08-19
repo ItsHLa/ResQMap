@@ -5,8 +5,9 @@ import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/features/earthquake/cubit/quake_cubit.dart';
 
 class TeamStatusView extends StatefulWidget {
-  const TeamStatusView({super.key, required this.id});
+  const TeamStatusView({super.key, required this.id, required this.locationId});
   final String id;
+  final String locationId;
 
   @override
   State<TeamStatusView> createState() => _TeamStatusViewState();
@@ -79,7 +80,7 @@ class _TeamStatusViewState extends State<TeamStatusView> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Animated status options
+                 
                   ...statusOptions.map((status) {
                     final isSelected = selectedStatus == status;
                     return AnimatedContainer(
@@ -152,12 +153,16 @@ class _TeamStatusViewState extends State<TeamStatusView> {
                               print(widget.id);
                               print({
                                 "id": widget.id,
+                                "location_id" : widget.locationId,
                                 "status": selectedStatus!,
                               });
                               BlocProvider.of<WebSocketCubit>(
                                 context,
                               ).postTeamStatus(
-                                {"id": widget.id, "status": selectedStatus},
+                                alertId: widget.id,
+                                locationId: widget.locationId,
+                                status: selectedStatus!
+
                               );
                             
                             }

@@ -199,7 +199,9 @@ class AlertItem extends StatelessWidget {
 
   void _navigateToTeamStatus(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => TeamStatusPage(id: alert.id!)),
+      MaterialPageRoute(builder: (context) => TeamStatusPage(
+        locationId: alert.location!.id!,
+        id: alert.id!)),
     );
   }
 

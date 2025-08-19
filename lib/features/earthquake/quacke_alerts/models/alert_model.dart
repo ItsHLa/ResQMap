@@ -45,7 +45,7 @@ class Alert {
       location: Location.fromJson(json["location"]),
       dangerLevel: json["danger_level"].toString(),
       teamStatus: json["team_status"],
-      // totalDamagedUsers: json["damaged_users"].toString(),
+      totalDamagedUsers: (json["damaged_users"] + json["total_count"]).toString(),
       // updatedAt: DateTime.parse(json["updated_at"])
     );
   }

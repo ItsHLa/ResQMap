@@ -6,13 +6,15 @@ class UserStatusItem extends StatefulWidget {
   const UserStatusItem({
     super.key,
     required this.photo,
-    required this.status,
+    required this.subtitle,
     required this.firstName,
-    required this.lastName, this.action,
-
+    required this.lastName,
+    this.action,
+    this.typeStatus = true,
   });
   final String photo;
-  final String status;
+  final String subtitle;
+  final bool typeStatus;
   final String firstName;
   final String lastName;
   final Widget? action;
@@ -39,9 +41,11 @@ class _UserStatusItemState extends State<UserStatusItem> {
               ),
               border: Border.all(
                 color:
-                    widget.status == "UnSafe"
-                        ? Colors.red.withOpacity(0.5)
-                        : Colors.green,
+                    widget.typeStatus
+                        ? widget.subtitle == "UnSafe"
+                            ? Colors.red.withOpacity(0.5)
+                            : Colors.green
+                        : Colors.blueGrey,
                 width: 2,
               ),
             ),
@@ -53,23 +57,27 @@ class _UserStatusItemState extends State<UserStatusItem> {
                   child: Container(
                     decoration: BoxDecoration(
                       color:
-                          widget.status == "UnSafe"
-                              ? Colors.red.withOpacity(0.4)
-                              : Colors.green.withOpacity(0.4),
+                          widget.typeStatus
+                              ? widget.subtitle == "UnSafe"
+                                  ? Colors.red.withOpacity(0.4)
+                                  : Colors.green.withOpacity(0.4)
+                              : Colors.blueGrey,
                       shape: BoxShape.circle,
                     ),
                     child:
-                        widget.status == "UnSafe"
-                            ? const Icon(
-                              Icons.error_outline,
-                              color: Colors.red,
-                              size: 20,
-                            )
-                            : const Icon(
-                              Icons.check_circle_outline,
-                              color: Colors.green,
-                              size: 20,
-                            ),
+                        widget.typeStatus
+                            ? widget.subtitle == "UnSafe"
+                                ? const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 20,
+                                )
+                                : const Icon(
+                                  Icons.check_circle_outline,
+                                  color: Colors.green,
+                                  size: 20,
+                                )
+                            : null,
                   ),
                 ),
               ],
@@ -83,17 +91,22 @@ class _UserStatusItemState extends State<UserStatusItem> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "${widget.firstName} ${widget.lastName}",
+                "${widget.firstName.replaceRange(0, 1, widget.firstName[0].toUpperCase())} ${widget.lastName.replaceRange(0, 1, widget.lastName[0].toUpperCase())}",
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                widget.status,
+                widget.typeStatus ? widget.subtitle : "@${widget.subtitle}",
                 style: TextStyle(
-                  color: widget.status == "UnSafe" ? Colors.red : Colors.green,
+                  color:
+                      widget.typeStatus
+                          ? widget.subtitle == "UnSafe"
+                              ? Colors.red
+                              : Colors.green
+                          : Colors.blueGrey,
                   fontSize: 14,
                 ),
               ),
@@ -101,12 +114,7 @@ class _UserStatusItemState extends State<UserStatusItem> {
           ),
 
           const Spacer(),
-          if(widget.action!=null)
-              SizedBox(
-                
-                width: 90,
-                child: widget.action!,
-              )
+          if (widget.action != null) SizedBox(width: 90, child: widget.action!),
         ],
       ),
     );

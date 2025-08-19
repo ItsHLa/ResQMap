@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resq_map/core/core_widgets/error_widget.dart';
 import 'package:resq_map/core/core_widgets/loading_widget.dart';
+import 'package:resq_map/core/core_widgets/state_widget.dart';
 import 'package:resq_map/core/services/actions.dart';
 import 'package:resq_map/features/earthquake/cubit/quake_cubit.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/widgets/damaged_users_view.dart';
@@ -72,7 +72,10 @@ class _DamagedUserPageState extends State<DamagedUserPage> {
                   : DamagedUsersView(damagedUsers: state.damagedUsers);
         }
         if (state is Error) {
-          content = ErrorView(refreshData: _refreshData);
+          content = MyStateWidget(
+                iconData: Icons.error_outline,
+                title: "Failed to Load",
+                refreshData: _refreshData);
         }
         return Scaffold(appBar: AppBar(
           title: Text("Damaged Users"),

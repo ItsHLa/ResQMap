@@ -23,7 +23,7 @@ class _DamagedUserItemState extends State<DamagedUserItem> {
   Widget build(BuildContext context) {
     return UserStatusItem(
       photo: widget.damagedUser.photos!,
-      status: widget.damagedUser.status!,
+      subtitle: widget.damagedUser.status!,
       firstName: widget.damagedUser.firstName,
       lastName: widget.damagedUser.lastName,
       action: OutlinedButton(

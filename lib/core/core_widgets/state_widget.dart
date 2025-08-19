@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ErrorView extends StatelessWidget {
-  const ErrorView({super.key, this.refreshData});
+class MyStateWidget extends StatelessWidget {
+  const MyStateWidget({
+    super.key,
+    this.refreshData,
+    required this.title,
+    required this.iconData,
+  });
   final void Function()? refreshData;
+  final String title;
+  final IconData iconData;
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +18,14 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, size: 48, color: Colors.red),
+           Icon(iconData, size: 48, color: Colors.red),
           const SizedBox(height: 16),
           Text(
-            "Failed to Load",
+            title,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          TextButton(onPressed: refreshData, child: const Text("Retry")),
+          if (refreshData != null) 
+              TextButton(onPressed: refreshData, child: const Text("Retry")),
         ],
       ),
     );

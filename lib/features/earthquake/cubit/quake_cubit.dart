@@ -37,14 +37,22 @@ class WebSocketCubit extends Cubit<WebSocketState> {
     }
   }
 
-  Future<void> postTeamStatus(var data) async {
+  Future<void> postTeamStatus({
+    required String alertId,
+    required String locationId,
+    required String status
+  }) async {
     emit(Loading());
     try {
       String? token = await AuthService.getAuthToken();
       var response = await HttpService.post(
         token: token,
         uri: Urls.POST_ASSIST_URL,
-        body: data as Map<String, dynamic>,
+        body: {
+          "id" :alertId,
+          "location_id" : locationId,
+          "status" : status 
+        },
       );
 
       if (response["status"] == "200") {

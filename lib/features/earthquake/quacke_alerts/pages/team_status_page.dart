@@ -5,8 +5,9 @@ import 'package:resq_map/features/earthquake/cubit/quake_cubit.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/widgets/team_status.dart';
 
 class TeamStatusPage extends StatefulWidget {
-  const TeamStatusPage({super.key, required this.id});
+  const TeamStatusPage({super.key, required this.id, required this.locationId});
   final String id;
+  final String locationId;
 
   @override
   State<TeamStatusPage> createState() => _TeamStatusPageState();
@@ -39,7 +40,9 @@ class _TeamStatusPageState extends State<TeamStatusPage> {
           );
         }
       },
-      child: TeamStatusView(id: widget.id),
+      child: TeamStatusView(
+        locationId: widget.locationId,
+        id: widget.id),
     );
   }
 }

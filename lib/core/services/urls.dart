@@ -28,12 +28,14 @@ abstract class Urls {
       "$baseUrlHttps/api/profiles/team/skills/get/";
   static const POST_TEAM_SKILLS_URL =
       "$baseUrlHttps/api/profiles/team/skills/post/";
-      
+
   //Safty
   static const GET_USER_STATUS = "$baseUrlHttps/api/profiles/user/status/";
   static const GET_SAFTY_USERS = "$baseUrlHttps/api/profiles/safty/";
-  static const DELETE_FROM_MY_SAFTY = "$baseUrlHttps/api/profiles/safty/remove/";
+  static const DELETE_FROM_MY_SAFTY =
+      "$baseUrlHttps/api/profiles/safty/remove/";
   static const ADD_TO_MY_SAFTY = "$baseUrlHttps/api/profiles/safty/add/";
+  static const SEARCH_USERS = "$baseUrlHttps/api/profiles/search/?q=";
 }
 
 //Auth Audit

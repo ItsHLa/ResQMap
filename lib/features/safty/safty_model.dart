@@ -1,12 +1,12 @@
 class SaftyModel {
-  final bool isMarkedSafe;
+  final String status;
   final String lastLocation;
 
-  SaftyModel({required this.isMarkedSafe, required this.lastLocation});
+  SaftyModel({required this.status, required this.lastLocation});
 
   factory SaftyModel.toJson(Map<String, dynamic> json) {
     return SaftyModel(
-      isMarkedSafe: json["is_marked_safe"],
+      status : json["status"] ,
       lastLocation: json["last_location"],
     );
   }
