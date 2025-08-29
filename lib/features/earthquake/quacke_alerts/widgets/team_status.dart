@@ -44,6 +44,7 @@ class _TeamStatusViewState extends State<TeamStatusView> {
               Spacer()
             ],
           ),
+          
           Padding(
             padding: EdgeInsets.all(PaddingConstants.md),
             child: Column(

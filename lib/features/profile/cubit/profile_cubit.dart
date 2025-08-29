@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:resq_map/core/services/fierbase_notifications.dart';
 import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/urls.dart';
 import 'package:resq_map/features/profile/model/team.dart';
@@ -220,6 +221,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
 
       if (response["status"] == "200") {
+        await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
         print(response["body"]);
 
@@ -240,12 +242,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoading());
     try {
       String? token = await AuthService.getAuthToken();
-      var response = await HttpService.delete(
+      var response = await HttpService.put(
         uri: deactiveProfileUrl,
         token: token,
       );
 
       if (response["status"] == "200") {
+        await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
         print(response["body"]);
 
@@ -263,7 +266,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> getTeamSkills() async {
-    emit(ProfileLoading());
+    emit(ProfileLoadingTeamSkills());
     try {
       String? token = await AuthService.getAuthToken();
       var response = await HttpService.get(token: token, uri: Urls.GET_TEAM_SKILLS_URL);

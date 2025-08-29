@@ -31,6 +31,7 @@ class _SignUpViewState extends State<SignUpView> {
   late List<String> labels;
   late List<Widget> prefixes;
   late List validators;
+  late List<TextInputType?> keybaordType;
   bool obscureText = true;
   @override
   void initState() {
@@ -40,12 +41,25 @@ class _SignUpViewState extends State<SignUpView> {
       const Icon(Icons.account_circle_outlined),
       const Icon(Icons.email_outlined),
       const Icon(Icons.phone_outlined),
-      const Icon(Icons.lock_outline),
+      const Icon(Icons.password_outlined),
+    ];
+    keybaordType = [
+      null,TextInputType.emailAddress,TextInputType.number,null
     ];
     validators = [
       (value) => value!.isEmpty ? 'Required' : null,
-      (value) => value!.contains('@') ? null : 'Invalid email',
-      (value) => value!.length >= 10 ? null : 'Too short',
+      (value) {
+        if (value == null) {
+          return "E-Mail can't be empty";
+        } else if (value.isEmpty) {
+          return "E-Mail can't be empty";
+        } else if (!value.contains('@')) {
+          return 'Invalid email';
+        } else {
+          return null;
+        }
+      },
+      (value) => value!.length >= 10 ? null : 'Too short, Must be 10 digits',
       PasswordValidator.validate,
     ];
     super.initState();
@@ -81,12 +95,12 @@ class _SignUpViewState extends State<SignUpView> {
             children: [
               Expanded(
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: InputDecoration(            
                     labelText: "First Name",
                     prefixIcon: const Icon(Icons.person_outline),
                   ),
                   controller: _firstNameController,
-                  validator: (value) => value!.isEmpty ? 'Required' : null,
+                  validator: (value) =>(value== null  || value.isEmpty) ? 'Required' : null,
                 ),
               ),
               const SizedBox(width: 16),
@@ -97,7 +111,7 @@ class _SignUpViewState extends State<SignUpView> {
                     prefixIcon: const Icon(Icons.person_outline),
                   ),
                   controller: _lastNameController,
-                  validator: (value) => value!.isEmpty ? 'Required' : null,
+                  validator: (value) => (value== null  || value.isEmpty) ? 'Required' : null,
                 ),
               ),
             ],
@@ -109,10 +123,12 @@ class _SignUpViewState extends State<SignUpView> {
           bottom: PaddingConstants.spaceBtwInputFields,
         ),
         child: TextFormField(
+          keyboardType: keybaordType[index],
           obscureText: index == labels.length - 1 ? obscureText : false,
           controller: controllers[index],
           decoration: InputDecoration(
-              suffix: index == labels.length - 1 ? IconButton(
+
+              suffixIcon: index == labels.length - 1 ? IconButton(
               
                 onPressed: (){
                           setState(() {

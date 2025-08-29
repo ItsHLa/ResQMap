@@ -3,6 +3,7 @@ import 'package:resq_map/core/services/geolocator_service.dart';
 import 'package:resq_map/core/services/permission_handler.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/pages/alerts.dart';
 import 'package:resq_map/features/earthquake/quake_news/pages/earthquakes_news_page.dart';
+import 'package:resq_map/features/map_and_location/location_page.dart';
 import 'package:resq_map/features/profile/pages/profile_page.dart';
 import 'package:resq_map/features/safty/safty_page.dart';
 
@@ -15,6 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Widget> pages = [
+    const LocationPage(),
     const SaftyPage(),
     const EarthquakesNewsPage(),
     const AlertsPage(),
@@ -52,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         currentIndex: indx,
         items: [
+            BottomNavigationBarItem(
+            icon: Icon(Icons.location_history),
+             label: 'Location'),
           BottomNavigationBarItem(
             icon: Icon(Icons.safety_check_outlined),
              label: 'Safty'),

@@ -22,15 +22,12 @@ class LocalNotificationService {
       await _createNotificationChannel();
 
       // Initialize with proper icon
-      const AndroidInitializationSettings androidSettings =
-          AndroidInitializationSettings("@mipmap/ic_launcher");
+      const AndroidInitializationSettings androidSettings =AndroidInitializationSettings("@mipmap/ic_launcher");
 
       final InitializationSettings settings = InitializationSettings(
         android: androidSettings,
         iOS: DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
+          requestAlertPermission: true,requestBadgePermission: true,requestSoundPermission: true,
         ),
       );
 
@@ -50,21 +47,12 @@ class LocalNotificationService {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', // Consistent channel ID
       'High Importance Notifications',
-      description: 'Channel for emergency alerts',
-      importance: Importance.max,
-      playSound: true,
-      // sound: RawResourceAndroidNotificationSound('notification'), // Ensure this sound exists
-      // enableVibration: true,
-      // vibrationPattern: Int64List.fromList([0, 250, 250, 250]),
-      ledColor: Colors.red,
-      enableLights: true,
+      description: 'Channel for emergency alerts',importance: Importance.max,playSound: true,
+      sound: RawResourceAndroidNotificationSound('notification'), // Ensure this sound exists
+      enableVibration: true,ledColor: Colors.red,enableLights: true,
     );
 
-    await _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(channel);
+    await _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
   }
 
   void _handleNotificationResponse(NotificationResponse response) {
@@ -74,7 +62,7 @@ class LocalNotificationService {
         HttpQuakeRequests.markStatus("Safe");
         break;
       case 'sos':
-        HttpQuakeRequests.markStatus("UnSafe");
+        HttpQuakeRequests.markStatus("Unsafe");
         break;
       default:
         HttpQuakeRequests.markStatus("Unknown");
@@ -96,17 +84,8 @@ class LocalNotificationService {
             'high_importance_channel',
             'High Importance Notifications',
             channelDescription: 'Channel for emergency alerts',
-            importance: Importance.max,
-            priority: Priority.high,
-            playSound: true,
-            // sound: RawResourceAndroidNotificationSound('notification'),
-            colorized: true,
-            color: Colors.blueGrey,
-            ledOnMs: 1000,
-            ledOffMs: 500,
-            enableVibration: true,
-            // vibrationPattern: Int64List.fromList([0, 250, 250, 250]),
-            // icon: 'ic_notification', // Must match your actual icon file
+            importance: Importance.max,priority: Priority.high,playSound: true,colorized: true,
+            color: Colors.blueGrey,ledOnMs: 1000,ledOffMs: 500,enableVibration: true,
             actions: [
               AndroidNotificationAction(
                 'safe',

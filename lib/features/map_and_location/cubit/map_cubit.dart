@@ -5,13 +5,33 @@ import 'package:meta/meta.dart';
 import 'package:resq_map/core/services/geolocator_service.dart';
 import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/urls.dart';
+import 'package:resq_map/features/earthquake/http_quake_requests.dart';
 import 'package:resq_map/features/map_and_location/model/route_model.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
+import 'package:resq_map/features/map_and_location/model/safty_model.dart';
 
 part 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
   MapCubit() : super(MapInitial());
+
+  Future<void> markSafe(String status) async {
+    emit(MarkSafeLoading());
+    try {
+      var response = await HttpQuakeRequests.markStatus(status);
+      if (response["status"] == "200") {
+        print(response["body"]);
+        emit(MarkSafeSuccess());
+      } else {
+        print("Failed");
+        emit(MarkSafeFailed(msg: "Check Your Internet Connection"));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(MarkSafeFailed(msg: "SomeThing Went Wrong:$e"));
+      print("SomeThing Went Wrong:$e");
+    }
+  }
 
   Future<void> route({required double lat, required double lon}) async {
     emit(MapLoading());
@@ -50,10 +70,35 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
+  Future<void> getUserStatus() async {
+    emit(MapLoading());
+    try {
+      String? token = await AuthService.getAuthToken();
+      var getUserStatusResponse = await HttpService.get(
+        uri: Urls.GET_USER_STATUS,
+        token: token,
+      );
+      if (getUserStatusResponse["status"] == "200") {
+        var json = getUserStatusResponse["body"];
+        final status = SaftyModel.toJson(json);
+        print(status);
+        emit(MapUserInfo(userStatus: status));
+      } else {
+        emit(MapError(msg: 'Check Your Internet Connection!'));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(MapError(msg: e.toString()));
+    }
+  }
+
   Future<void> trackLocation({required Position position}) async {
     String? token = await AuthService.getAuthToken();
-    final lat = position.latitude.toStringAsFixed(4);
-    final lon = position.longitude.toStringAsFixed(4);
+    final lat = position.latitude.toStringAsFixed(6);
+    final lon = position.longitude.toStringAsFixed(6);
+
+    print(lat);
+    print(lon);
 
     var response = await HttpService.post(
       token: token,

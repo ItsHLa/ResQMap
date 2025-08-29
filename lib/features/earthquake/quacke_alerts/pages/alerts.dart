@@ -43,6 +43,7 @@ class _AlertsPageState extends State<AlertsPage> {
                 current is WebSocketError;
           },
           listener: (context, state) {
+            print(state);
             if (state is WebSocketError) {
               AppActions.showSnackBar(
                 title: "Check Your Internet Connection",
@@ -59,7 +60,8 @@ class _AlertsPageState extends State<AlertsPage> {
               return MyStateWidget(
                 iconData: Icons.error_outline,
                 title: "Failed to Load",
-                refreshData: _refreshData);
+                refreshData: _refreshData,
+              );
             }
 
             if (state is WebSocketAlertsReceived) {

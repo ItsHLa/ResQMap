@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:resq_map/core/services/fierbase_notifications.dart';
 import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/urls.dart';
 
@@ -34,7 +35,10 @@ class AuthCubit extends Cubit<AuthState> {
     print(data);
     emit(AuthLoading());
     try {
-      var response = await HttpService.post(uri: Urls.RESET_COMPLETE_URL, body: data);
+      var response = await HttpService.post(
+        uri: Urls.RESET_COMPLETE_URL,
+        body: data,
+      );
 
       print(response);
       if (response["status"] == "200") {
@@ -95,10 +99,11 @@ class AuthCubit extends Cubit<AuthState> {
       var token = await AuthService.getAuthToken();
       var response = await HttpService.post(
         token: token!,
-        uri: Urls.LOG_OUT_URL, body: {
-        "refresh" : refresh
-      });
+        uri: Urls.LOG_OUT_URL,
+        body: {"refresh": refresh},
+      );
       if (response["status"] == "200") {
+        await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
         emit(AuthLogedOut());
       } else {
@@ -110,7 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> getAuthAudit() async {
-    emit(AuthLoading());
+    emit(AuthAuditLoading());
     try {
       String? token = await AuthService.getAuthToken();
       var response = await HttpService.get(token: token, uri: authAuditUrl);

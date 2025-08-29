@@ -22,8 +22,9 @@ class _DamagedUserItemState extends State<DamagedUserItem> {
   @override
   Widget build(BuildContext context) {
     return UserStatusItem(
+      status:widget.damagedUser.status! ,
       photo: widget.damagedUser.photos!,
-      subtitle: widget.damagedUser.status!,
+      subtitle: widget.damagedUser.isOnline ?"Online" : widget.damagedUser.lastSeen ??"Unknown",
       firstName: widget.damagedUser.firstName,
       lastName: widget.damagedUser.lastName,
       action: OutlinedButton(

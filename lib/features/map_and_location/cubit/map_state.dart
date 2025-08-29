@@ -7,6 +7,25 @@ final class MapInitial extends MapState {}
 
 final class MapLoading extends MapState {}
 
+final class MarkSafeSuccess extends MapState {}
+
+final class MarkSafeFailed extends MapState {
+   final String msg;
+
+  MarkSafeFailed({required this.msg});
+
+}
+
+final class MarkSafeLoading extends MapState {
+
+
+}
+final class MapUserInfo extends MapState {
+  final SaftyModel userStatus;
+
+  MapUserInfo({required this.userStatus});
+}
+
 final class MapSuccess extends MapState {
   final Route route;
 

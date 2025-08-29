@@ -4,53 +4,32 @@ import 'package:meta/meta.dart';
 import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/urls.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
-import 'package:resq_map/features/earthquake/http_quake_requests.dart';
 import 'package:resq_map/features/profile/model/user.dart';
-import 'package:resq_map/features/safty/safty_model.dart';
+
 
 part 'safty_state.dart';
 
 class SaftyCubit extends Cubit<SaftyState> {
   SaftyCubit() : super(SaftyInitial());
 
-  Future<void> markSafe(bool status) async {
-    try {
-      var response = HttpQuakeRequests.markStatus(status ? "Safe" : "UnSafe");
-      if (response["status"] == "200") {
-        print(response["body"]);
-        emit(MarkSafeSuccess());
-      } else {
-        print("Failed");
-        emit(MySaftyError(msg: "Check Your Internet Connection"));
-      }
-    } catch (e) {
-      emit(MySaftyError(msg: "SomeThing Went Wrong:$e"));
-      print("SomeThing Went Wrong:$e");
-    }
-  }
-
-  Future<void> getUserStatus() async {
+ 
+  Future<void> getSaftyNetwork() async {
     emit(Loading());
     try {
       String? token = await AuthService.getAuthToken();
-      var getUserStatusResponse = await HttpService.get(
-        uri: Urls.GET_USER_STATUS,
-        token: token,
-      );
 
       var getSaftyUsersResponse = await HttpService.get(
         uri: Urls.GET_SAFTY_USERS,
         token: token,
       );
 
-      if (getUserStatusResponse["status"] == "200" &&
-          getSaftyUsersResponse["status"] == "200") {
-        var json = getUserStatusResponse["body"];
-        final status = SaftyModel.toJson(json);
+      if (getSaftyUsersResponse["status"] == "200") {
         List data = getSaftyUsersResponse["body"];
+        print(data);
         List<User> safty = data.map((json) => User.fromJson(json)).toList();
-        print(status);
-        emit(UserStatusSuccess(myStatus: status, mySafty: safty));
+        print(safty.length);
+
+        emit(GetSaftyNetworkSuccess( mySafty: safty));
       } else {
         emit(Error());
       }
@@ -69,12 +48,9 @@ class SaftyCubit extends Cubit<SaftyState> {
         token: token,
       );
 
-     
-
-      if (response["status"] == "200" 
-         ) {
-        
+      if (response["status"] == "200") {
         List data = response["body"];
+        print(data);
         List<User> users = data.map((json) => User.fromJson(json)).toList();
         print(users);
         emit(GetSearchUserSuccess(users: users));
@@ -94,11 +70,13 @@ class SaftyCubit extends Cubit<SaftyState> {
     emit(MySaftyLoading());
     try {
       String? token = await AuthService.getAuthToken();
-      
+
       var response = await HttpService.put(
         token: token,
         uri: Urls.ADD_TO_MY_SAFTY,
-        body: {"my_safty": [user.id]},
+        body: {
+          "my_safty": [user.id],
+        },
       );
 
       if (response["status"] == "200") {

@@ -10,7 +10,7 @@ abstract class Urls {
   static const GET_ALERT_URL = '$baseUrlWss/ws/alerts/emergency/';
   static const POST_ASSIST_URL = "$baseUrlHttps/api/alerts/assist/";
   static const INFO_ALERT_URL = "$baseUrlHttps/api/alerts/get/info/";
-  static const TRAK_LOCATION_URL = "$baseUrlHttps/api/alerts/location/track/";
+  static const TRAK_LOCATION_URL = "$baseUrlHttps/api/maps/location/track/";
   static const MARK_SAFE_URL = "$baseUrlHttps/api/profiles/mark/status/";
   static const GET_DAMAGED_USERS_URL =
       "$baseUrlHttps/api/alerts/users/damaged/get/?q=";

@@ -1,56 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resq_map/core/constants/constants.dart';
 import 'package:resq_map/features/profile/model/team.dart';
 
 class TeamCard extends StatelessWidget {
   final EmergencyTeam team;
   final bool isSelected;
 
-  const TeamCard({
-    required this.team,
-    this.isSelected = false,
-  });
+  const TeamCard({required this.team, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isSelected
-            ? BorderSide(color: Colors.red[700]!, width: 2)
-            : BorderSide.none,
+        borderRadius: BorderRadiusGeometry.circular(12)
       ),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    team.teamName,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.red[700] : Colors.black,
-                    ),
-                  ),
-                ),
-                if (isSelected)
-                  Icon(Icons.check_circle, color: Colors.red[700]),
-              ],
-            ),
-            SizedBox(height: 8),
-            Text(
-              team.coreFunction,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
-          ],
-        ),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ListTile(
+        contentPadding: EdgeInsets.all(8),
+        leading: isSelected ? Icon(Icons.check, color: Colors.green,) : Icon(Icons.emergency, color: appThemeColor,),
+        selected: isSelected,
+        selectedColor: Colors.green,
+        title: Text(team.teamName, style:
+         TextStyle(
+         
+          fontWeight: FontWeight.bold),),
+        subtitle: Text(team.coreFunction, style: TextStyle(color: Colors.blueGrey),),
       ),
     );
+    
   }
 }

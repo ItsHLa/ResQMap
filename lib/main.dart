@@ -26,9 +26,7 @@ void main() async {
   await SettingsService.init();
   await AuthService.init();
 
-  SettingsService.trackLocation =
-      await SettingsService.getTrackingLocation() ?? false;
-  SettingsService.darkMode = await SettingsService.getDarkMode() ?? false;
+
   runApp(const MyApp());
 }
 

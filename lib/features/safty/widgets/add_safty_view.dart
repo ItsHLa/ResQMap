@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/core/constants/text_styles.dart';
-
 import 'package:resq_map/core/core_widgets/loading_widget.dart';
-
 import 'package:resq_map/core/core_widgets/state_widget.dart';
 import 'package:resq_map/core/core_widgets/user_status_item.dart';
+import 'package:resq_map/core/services/actions.dart';
+import 'package:resq_map/features/profile/model/user.dart';
 import 'package:resq_map/features/safty/cubit/safty_cubit.dart';
 
 class AddSaftyView extends StatefulWidget {
@@ -18,6 +18,7 @@ class AddSaftyView extends StatefulWidget {
 
 class _AddSaftyViewState extends State<AddSaftyView> {
   bool showSearch = false;
+  List<User> users = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,7 @@ class _AddSaftyViewState extends State<AddSaftyView> {
             contentPadding: EdgeInsets.all(8),
             suffixIcon: Icon(Icons.search),
             filled: true,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            fillColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.3),
             hintStyle: TextStyles.textStyle14,
             hintText: "Type a username or full name",
           ),
@@ -39,7 +40,19 @@ class _AddSaftyViewState extends State<AddSaftyView> {
       ),
       body: BlocConsumer<SaftyCubit, SaftyState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if(state is MySaftyLoading ){
+            AppActions.showLoadingDialog(context);
+          }
+          if (state is AddedSaftyUsersSuccess) {
+            setState(() {
+              users = state.users;
+            });
+          }
+          if (state is GetSearchUserSuccess) {
+            setState(() {
+              users = state.users;
+            });
+          }
         },
         buildWhen: (previous, current) {
           return current is GetSearchUserSuccess ||
@@ -50,7 +63,6 @@ class _AddSaftyViewState extends State<AddSaftyView> {
           Widget content = MyStateWidget(
             iconData: Icons.search_rounded,
             title: "Who are you looking for?",
-          
           );
           if (state is SearchUserLoading) {
             content = LoadingAnimation();
@@ -61,22 +73,23 @@ class _AddSaftyViewState extends State<AddSaftyView> {
               title: "Failed to Load",
             );
           }
-          if (state is GetSearchUserSuccess) {
-            content =
-                state.users.isEmpty
+       
+          if(state is AddedSaftyUsersSuccess || state is GetSearchUserSuccess){
+              content =
+                users.isEmpty
                     ? MyStateWidget(
-            iconData: Icons.find_in_page,
-            title: "Result Not Found",
-          
-          )
+                      iconData: Icons.find_in_page,
+                      title: "Result Not Found",
+                    )
                     : ListView.builder(
-                      itemCount: state.users.length,
+                      itemCount: users.length,
                       itemBuilder:
                           (context, index) => UserStatusItem(
-                            photo: state.users[index].photos!,
-                            subtitle: state.users[index].userName,
-                            firstName: state.users[index].firstName,
-                            lastName: state.users[index].lastName,
+                            status: users[index].status ?? "Unknown",
+                            photo: users[index].photos!,
+                            subtitle: users[index].userName,
+                            firstName: users[index].firstName,
+                            lastName: users[index].lastName,
                             typeStatus: false,
                             action: IconButton(
                               iconSize: 30,
@@ -84,14 +97,16 @@ class _AddSaftyViewState extends State<AddSaftyView> {
                                 BlocProvider.of<SaftyCubit>(
                                   context,
                                 ).addToMySafty(
-                                  user: state.users[index],
-                                  users: state.users,
+                                  user: users[index],
+                                  users: users,
                                 );
                               },
                               icon: Icon(Icons.person_add_alt),
                             ),
                           ),
                     );
+          
+          
           }
           return content;
         },

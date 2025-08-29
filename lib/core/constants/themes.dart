@@ -104,7 +104,6 @@ class AppTheme {
     iconTheme: const IconThemeData(color: appThemeColor),
 
     inputDecorationTheme: InputDecorationTheme(
-      
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(color: Colors.grey),

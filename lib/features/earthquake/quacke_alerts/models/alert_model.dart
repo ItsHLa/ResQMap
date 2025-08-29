@@ -1,21 +1,5 @@
-class Location {
-  String? id;
-  double? lat;
-  double? lon;
-  String? fulladdress;
-  double? distance;
-  Location({this.id,this.lat, this.lon, this.distance, this.fulladdress});
 
-  factory Location.fromJson(json) {
-    return Location(
-      id : json["id"],
-      lat: json["lat"],
-      lon: json["lon"],
-      distance: json["distance"],
-      fulladdress: json["address"],
-    );
-  }
-}
+import 'package:resq_map/features/map_and_location/model/location_model.dart';
 
 class Alert {
   String? id;
@@ -46,7 +30,7 @@ class Alert {
       dangerLevel: json["danger_level"].toString(),
       teamStatus: json["team_status"],
       totalDamagedUsers: (json["damaged_users"] + json["total_count"]).toString(),
-      // updatedAt: DateTime.parse(json["updated_at"])
+      updatedAt: DateTime.parse(json["updated_at"])
     );
   }
 }

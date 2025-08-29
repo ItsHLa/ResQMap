@@ -18,7 +18,7 @@ class SaftyPage extends StatefulWidget {
 
 class _SaftyPageState extends State<SaftyPage> {
   Future<void> _refreshData() async {
-    await BlocProvider.of<SaftyCubit>(context).getUserStatus();
+    await BlocProvider.of<SaftyCubit>(context).getSaftyNetwork();
   }
 
   List<User> mySafty = [];
@@ -26,7 +26,6 @@ class _SaftyPageState extends State<SaftyPage> {
   void initState() {
     _refreshData();
 
-    // TODO: implement initState
     super.initState();
   }
 
@@ -34,15 +33,6 @@ class _SaftyPageState extends State<SaftyPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<SaftyCubit, SaftyState>(
       listener: (context, state) {
-        if (state is MySaftyLoading) {
-          AppActions.showLoadingDialog(context);
-        }
-        if (state is MarkSafeSuccess) {
-          AppActions.showSnackBar(
-            title: "Marked Safe Successfuly!",
-            context: context,
-          );
-        }
         if (state is AddedSaftyUsersSuccess) {
           setState(() {
             mySafty.add(state.addedToSafty);
@@ -71,7 +61,7 @@ class _SaftyPageState extends State<SaftyPage> {
         }
       },
       buildWhen: (previous, current) {
-        return current is UserStatusSuccess ||
+        return current is GetSaftyNetworkSuccess ||
             current is Loading ||
             current is Error;
       },
@@ -80,10 +70,9 @@ class _SaftyPageState extends State<SaftyPage> {
                 iconData: Icons.error_outline,
                 title: "Failed to Load",
                 refreshData: _refreshData);
-        if (state is UserStatusSuccess) {
-          mySafty = state.mySafty;
-          print(mySafty[mySafty.length-1].status);
-          body = SaftyView(userStatus: state.myStatus, mySafty: mySafty);
+        if (state is GetSaftyNetworkSuccess) {
+          mySafty = state.mySafty;  
+          body = SaftyView(mySafty: mySafty);
         }
         if (state is Loading) {
           body = LoadingAnimation();
@@ -91,6 +80,7 @@ class _SaftyPageState extends State<SaftyPage> {
         return Scaffold(
           appBar: RAppBar(
             title: "Safty NetWork",
+            
             actions: [Icon(Icons.safety_check_outlined, size: 30)],
           ),
           body: body,

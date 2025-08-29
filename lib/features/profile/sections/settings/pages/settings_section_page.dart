@@ -20,15 +20,18 @@ class _SettingsSectionPageState extends State<SettingsSectionPage> {
         if (state is ProfileLoading) {
           AppActions.showLoadingDialog(context);
         }
-        if (state is DeactivateSuccess) {
+        if (state is DeactivateSuccess || state is DeleteSuccess) {
+          Navigator.of(context).pop();
           Navigator.of(
             context,
           ).push(MaterialPageRoute(builder: (context) => LoginPage()));
         }
         if (state is ProfileError) {
+          Navigator.of(context).pop();
           AppActions.showSnackBar(
             title: "Something Went Wrong! Please Try Again Later",
-           context: context);
+            context: context,
+          );
         }
       },
       child: SettingsSectionView(),

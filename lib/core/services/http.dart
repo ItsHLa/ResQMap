@@ -69,7 +69,7 @@ class HttpService {
   static Future<dynamic> put({
     required String uri,
     String? token,
-    required Map<String, dynamic> body,
+    Map<String, dynamic>? body,
   }) async {
     var url = Uri.parse(uri);
 

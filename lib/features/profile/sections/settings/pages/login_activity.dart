@@ -21,12 +21,12 @@ class _LoginActivityPageState extends State<LoginActivityPage> {
 
   String _formatDate(String isoDate) {
     final date = DateTime.parse(isoDate);
-    return DateFormat('MMM d, yyyy').format(date); // Requires intl package
+    return DateFormat('MMM d, yyyy').format(date); 
   }
 
   String _formatTime(String isoDate) {
     final date = DateTime.parse(isoDate);
-    return DateFormat('h:mm a').format(date); // e.g. "2:30 PM"
+    return DateFormat('h:mm a').format(date); 
   }
 
   @override
@@ -44,7 +44,7 @@ class _LoginActivityPageState extends State<LoginActivityPage> {
       ),
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          if (state is AuthLoading) {
+          if (state is AuthAuditLoading) {
             return LoadingAnimation();
           } else if (state is AuthLoadedAudits) {
             return ListView.builder(
@@ -88,10 +88,7 @@ class _LoginActivityPageState extends State<LoginActivityPage> {
                             ),
                           ],
                         ),
-                    // contentPadding: EdgeInsets.symmetric(
-                    //   horizontal: 16,
-                    //   vertical: 8,
-                    // ),
+                   
                   ),
             );
           }

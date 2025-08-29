@@ -16,7 +16,7 @@ class SettingsSectionView extends StatefulWidget {
 class _SettingsSectionViewState extends State<SettingsSectionView> {
   List headers = [
     'Security & Login',
-    'Accessibility & Display',
+    // 'Accessibility & Display',
     'Account Action',
   ];
 
@@ -41,9 +41,9 @@ class _SettingsSectionViewState extends State<SettingsSectionView> {
         },
       },
     ],
-    [
-      {"arrow": false, "title": Text("Dark Mode"), "onTap": (context) {}},
-    ],
+    // [
+    //   {"arrow": false, "title": Text("Dark Mode"), "onTap": (context) {}},
+    // ],
     [
       {
         "arrow": false,
@@ -78,23 +78,26 @@ class _SettingsSectionViewState extends State<SettingsSectionView> {
           shrinkWrap: true,
           itemCount: headers.length,
           itemBuilder:
-              (context, index) => SettingItem(
-                title: headers[index],
-                childern:
-                    actions[index]
-                        .map(
-                          (action) => ListTile(
-                            trailing:
-                                action["arrow"]
-                                    ? Icon(Icons.arrow_forward_ios)
-                                    : null,
-                            onTap: () {
-                              action["onTap"](context);
-                            },
-                            title: action["title"],
-                          ),
-                        )
-                        .toList(),
+              (context, index) => Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: SettingItem(
+                  title: headers[index],
+                  childern:
+                      actions[index]
+                          .map(
+                            (action) => ListTile(
+                              trailing:
+                                  action["arrow"]
+                                      ? Icon(Icons.arrow_forward_ios)
+                                      : null,
+                              onTap: () {
+                                action["onTap"](context);
+                              },
+                              title: action["title"],
+                            ),
+                          )
+                          .toList(),
+                ),
               ),
         ),
       ),

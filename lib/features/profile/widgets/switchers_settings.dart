@@ -76,7 +76,7 @@ class _SwitchersSettingsState extends State<SwitchersSettings> {
             switchersValues[1] = state.tracking;
           });
         }
-        // TODO: implement listener
+      
       },
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),

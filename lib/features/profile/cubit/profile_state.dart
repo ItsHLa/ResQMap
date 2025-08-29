@@ -6,7 +6,7 @@ sealed class ProfileState {}
 final class ProfileInitial extends ProfileState {}
 
 final class ProfileLoading extends ProfileState {}
-
+final class ProfileLoadingTeamSkills extends ProfileState {}
 final class ProfileLoadedTeamSkills extends ProfileState {
   final List<EmergencyTeam> skills;
 

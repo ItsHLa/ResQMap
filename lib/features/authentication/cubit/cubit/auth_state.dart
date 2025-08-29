@@ -13,6 +13,10 @@ final class AuthEmailVerify extends AuthState {
 
 final class AuthLoading extends AuthState {}
 
+final class AuthLogOutLoading extends AuthState {}
+
+final class AuthAuditLoading extends AuthState {}
+
 final class AuthSignedUp extends AuthState {}
 
 final class AuthLogedIn extends AuthState {}

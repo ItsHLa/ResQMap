@@ -49,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     List<Widget> prefixes = [
       Icon(Icons.email_outlined),
-      Icon(Icons.lock_outline),
+      Icon(Icons.password_outlined),
     ];
     return Scaffold(
       body: Padding(
@@ -87,14 +87,14 @@ class _LoginViewState extends State<LoginView> {
                       bottom: PaddingConstants.spaceBtwInputFields,
                     ),
                     child: TextFormField(
-                      obscureText: index == 1 ? obscureText : false,
+                      obscureText: index == labels.length-1 ? obscureText : false,
                       decoration: InputDecoration(
                         
-                        suffix: index == 1 ? IconButton(onPressed: (){
+                        suffixIcon: index == labels.length-1 ? IconButton(onPressed: (){
                           setState(() {
                             obscureText = !obscureText;
                           });
-                        }, icon: Icon(Icons.remove_red_eye_outlined)): null,
+                        }, icon: Icon(Icons.remove_red_eye_outlined,color: obscureText ? Colors.grey: appThemeColor)): null,
                         labelText: labels[index],
                         prefixIcon: prefixes[index],
                       ),

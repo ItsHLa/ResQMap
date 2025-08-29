@@ -7,6 +7,8 @@ import 'package:resq_map/features/profile/sections/about/widget/image_picker.dar
 import 'package:resq_map/features/profile/widgets/info_fields.dart';
 import 'package:resq_map/features/profile/sections/about/widget/skill_section.dart';
 
+import '../../../../authentication/sign_up/pages/team_skills_page.dart';
+
 class AboutPageView extends StatefulWidget {
   final User user;
   final TextEditingController email;
@@ -43,7 +45,7 @@ class _AboutPageViewState extends State<AboutPageView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ImagePicker(image: widget.user.photos!),
-              _buildSectionHeader('Contact Info'),
+              _buildSectionHeader(title: 'Contact Info'),
               _buildInfoItem(
                 icon: Icons.email,
                 type: "Email",
@@ -129,8 +131,8 @@ class _AboutPageViewState extends State<AboutPageView> {
                 ),
               ),
 
-              _buildSectionHeader('Skills'),
-              SkillSection(skill: widget.user.skills!),
+              _buildSectionHeader(title: 'Skills', showAdd: true),
+              SkillSection(skill: widget.user.skills),
               SizedBox(height: 20),
             ],
           ),
@@ -139,13 +141,26 @@ class _AboutPageViewState extends State<AboutPageView> {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
-    return Text(
-      title.toUpperCase(),
-      style: TextStyle(
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w300,
-                ),
+  Widget _buildSectionHeader({required String title, bool showAdd  = false}) {
+    return Row(
+      children: [
+        Text(
+          title.toUpperCase(),
+          style: TextStyle(
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w300,
+                    ),
+        ),
+        Spacer(),
+        if(showAdd)
+           IconButton(onPressed: (){
+             Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeamSkillsPage(
+              showBackArrow: true,
+             ),));
+           },
+               iconSize: 35,
+               icon: Icon(Icons.add))
+      ],
     );
   }
 
