@@ -117,70 +117,67 @@ class _ProfilePageState extends State<ProfilePage> {
 
             body:
                 state is GetProfileSuccess
-                    ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: PaddingConstants.sm),
-
-                          // SETTINGS
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: titles.length - 1,
-                            itemBuilder:
-                                (context, index) => ListTile(
-                                  trailing:
-                                      backArrow[index]
-                                          ? Icon(Icons.arrow_forward_ios)
-                                          : null,
-                                  leading: Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Icon(
-                                      icons[index],
-                                      color: Colors.red.shade500,
-                                    ),
+                    ? Column(
+                      children: [
+                        const SizedBox(height: PaddingConstants.sm),
+                    
+                        // SETTINGS
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: titles.length - 1,
+                          itemBuilder:
+                              (context, index) => ListTile(
+                                trailing:
+                                    backArrow[index]
+                                        ? Icon(Icons.arrow_forward_ios)
+                                        : null,
+                                leading: Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  onTap: () {
-                                    if (navigateTo![index] != null) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) => navigateTo![index]!,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  title: Text(titles[index]),
+                                  child: Icon(
+                                    icons[index],
+                                    color: Colors.red.shade500,
+                                  ),
                                 ),
-                          ),
-
-                          //SWITCHERS
-                          SwitchersSettings(),
-                          //LOGOUT
-                          ListTile(
-                            leading: Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {
+                                  if (navigateTo![index] != null) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => navigateTo![index]!,
+                                      ),
+                                    );
+                                  }
+                                },
+                                title: Text(titles[index]),
                               ),
-                              child: Icon(
-                                icons[titles.length - 1],
-                                color: Colors.red.shade500,
-                              ),
+                        ),
+                    
+                        //SWITCHERS
+                        SwitchersSettings(),
+                        //LOGOUT
+                        ListTile(
+                          leading: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            onTap: () {
-                              BlocProvider.of<AuthCubit>(context).logOut();
-                            },
-                            title: Text(titles[titles.length - 1]),
+                            child: Icon(
+                              icons[titles.length - 1],
+                              color: Colors.red.shade500,
+                            ),
                           ),
-                        ],
-                      ),
+                          onTap: () {
+                            BlocProvider.of<AuthCubit>(context).logOut();
+                          },
+                          title: Text(titles[titles.length - 1]),
+                        ),
+                      ],
                     )
                     : state is ProfileLoading
                     ? LoadingAnimation()

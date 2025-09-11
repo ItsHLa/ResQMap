@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:resq_map/core/services/fierbase_notifications.dart';
 import 'package:resq_map/core/services/http.dart';
 import 'package:resq_map/core/services/urls.dart';
+import 'package:resq_map/features/home/cubit/cubit/settings_cubit.dart';
+import 'package:resq_map/features/home/settings_service.dart';
 import 'package:resq_map/features/profile/model/team.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
 import 'package:resq_map/features/profile/model/medical_record.dart';
@@ -223,6 +226,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (response["status"] == "200") {
         await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
+        await SettingsService.clearAllData();
         print(response["body"]);
 
         emit(DeleteSuccess());
@@ -250,6 +254,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (response["status"] == "200") {
         await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
+        await SettingsService.clearAllData();
         print(response["body"]);
 
         emit(DeactivateSuccess());
@@ -269,7 +274,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoadingTeamSkills());
     try {
       String? token = await AuthService.getAuthToken();
-      var response = await HttpService.get(token: token, uri: Urls.GET_TEAM_SKILLS_URL);
+      var response = await HttpService.get(
+        token: token,
+        uri: Urls.GET_TEAM_SKILLS_URL,
+      );
 
       List result = response["body"];
       List<EmergencyTeam> skills =
@@ -280,18 +288,26 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> postTeamSkills(var data) async {
-    emit(ProfileLoading());
+  Future<void> postTeamSkills({
+    required List<String> copyskills,
+    bool edit = false,
+  }) async {
+    if (edit) {
+      emit(TeamSkillsLoading());
+    } else {
+      emit(ProfileLoading());
+    }
+
     try {
       String? token = await AuthService.getAuthToken();
       var response = await HttpService.put(
         token: token,
         uri: Urls.POST_TEAM_SKILLS_URL,
-        body: data,
+        body: {"skills": copyskills},
       );
 
       if (response["status"] == "200") {
-        emit(ProfileTeamSkillsPostSuccess());
+        emit(ProfileTeamSkillsPostSuccess(edit: edit, skills: copyskills));
       } else {
         emit(ProfileError(msg: response["body"]));
       }

@@ -32,9 +32,10 @@ class _TeamSkillsPageState extends State<TeamSkillsPage> {
         print(state);
 
         if (state is ProfileTeamSkillsPostSuccess) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => MyHomePage()),
-          );
+          Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => MyHomePage()),
+            (route) => false, 
+);
         }
       },
       builder: (context, state) {
@@ -53,5 +54,6 @@ class _TeamSkillsPageState extends State<TeamSkillsPage> {
           body: body);
       },
     );
+  
   }
 }

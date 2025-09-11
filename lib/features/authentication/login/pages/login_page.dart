@@ -32,7 +32,9 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
 
-      child: Scaffold(body: LoginView()),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: LoginView()),
     );
   }
 }

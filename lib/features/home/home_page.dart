@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
              label: 'Location'),
           BottomNavigationBarItem(
             icon: Icon(Icons.safety_check_outlined),
-             label: 'Safty'),
+             label: 'Safety'),
           BottomNavigationBarItem(
             icon: Icon(Icons.public_outlined),
              label: 'News'),

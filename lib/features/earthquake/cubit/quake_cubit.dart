@@ -33,7 +33,7 @@ class WebSocketCubit extends Cubit<WebSocketState> {
     } catch (e) {
       debugPrint("WebSocket connection error: $e");
       emit(WebSocketError("Connection failed: ${e.toString()}"));
-      rethrow;
+      // rethrow;
     }
   }
 
@@ -103,12 +103,14 @@ class WebSocketCubit extends Cubit<WebSocketState> {
       // Cancel any existing subscription
       await _messageSubscription?.cancel();
       Position start = await GeolocatorService.getLocation();
+      print(start.latitude);
+      print(start.longitude);
       // Send request
       _webSocket.sendMessage(
         jsonEncode({
           "type": "get_alerts",
-          "lat": start.latitude.toStringAsFixed(4),
-          "lon": start.longitude.toStringAsFixed(4),
+          "lat": start.latitude,
+          "lon": start.longitude,
         }),
       );
 

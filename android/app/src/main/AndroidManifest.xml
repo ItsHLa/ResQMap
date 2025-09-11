@@ -16,12 +16,15 @@
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
 
+        <meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyCcgfP0fVo1tb2Gd6ptsZ9teZdqyv2QLTk" />
 
         <service
             android:name="com.baseflow.geolocator.location.ForegroundNotificationService"
             android:foregroundServiceType="location|dataSync" />
-
-       
+        
+               
         <activity
             android:name=".MainActivity"
             android:exported="true"

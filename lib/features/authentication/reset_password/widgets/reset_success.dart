@@ -8,6 +8,7 @@ class ResetSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: PaddingConstants.xl),
         child: Column(
@@ -17,7 +18,9 @@ class ResetSuccessScreen extends StatelessWidget {
             const SizedBox(height: 24),
              Text(
               'Password Reset Successful!',
-              style: TextStyles.textStyle18.copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles.textStyle18.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
              Text(

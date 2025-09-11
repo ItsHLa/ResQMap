@@ -3,7 +3,7 @@ import 'package:resq_map/core/constants/constants.dart';
 
 class SkillSection extends StatefulWidget {
   const SkillSection({super.key, required this.skill});
-  final List? skill;
+  final List skill;
 
   @override
   State<SkillSection> createState() => _SkillSectionState();
@@ -12,11 +12,11 @@ class SkillSection extends StatefulWidget {
 class _SkillSectionState extends State<SkillSection> {
   @override
   Widget build(BuildContext context) {
-    return (widget.skill != null)  ?  Wrap(
+    return (widget.skill.isNotEmpty)  ?  Wrap(
       spacing: 8,
       runSpacing: 4,
 
-      children: widget.skill!.map((s) {
+      children: widget.skill.map((s) {
         return Chip(
           elevation: 5,
           shape: RoundedRectangleBorder(
@@ -25,11 +25,17 @@ class _SkillSectionState extends State<SkillSection> {
           avatar:  CircleAvatar(
             backgroundColor:  appThemeColor,
             child: Icon(Icons.emergency_outlined,color:softWhite )),
-          label:   Text(s.replaceAll("Team" , ""),),
+          label:   Text(s.toString().replaceAll("Team" , ""),),
          
         );
       }).toList()
-    ): Text("Add Your skills");
+    ): Row(
+      children: [
+        Icon(Icons.emergency, color: appThemeColor,),
+        SizedBox(width: 8,),
+        Text("There is no skills to show" , style: TextStyle(color: Colors.blueGrey),)
+      ],
+    );
     
   
   

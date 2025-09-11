@@ -56,10 +56,11 @@ class _ImagePickerState extends State<ImagePicker> {
             children: [
               Text(
                 "Profile picture".toUpperCase(),
-                style: TextStyle(
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w300,
-                ),
+                style:TextStyles.textStyle16.copyWith(
+           
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w500,
+                    )
               ),
               TextButton(
                 onPressed: _pickImage,

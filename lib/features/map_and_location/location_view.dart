@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:resq_map/core/constants/constants.dart';
-import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/core/core_widgets/map_in_place_item.dart';
 import 'package:resq_map/core/services/geolocator_service.dart';
 import 'package:resq_map/features/home/cubit/cubit/settings_cubit.dart';
@@ -22,20 +21,19 @@ class LocationView extends StatefulWidget {
 class _LocationViewState extends State<LocationView> {
   bool trackingOn = false;
 
-  String userStatus = "Unknown";
+  bool userStatus = false;
 
   @override
   void initState() {
-    // setState(() {
-    //   userStatus = ;
-    // });
-    
+    userStatus = (widget.status == "Safe" || widget.status == "Rescued");
+
     BlocProvider.of<SettingsCubit>(context).getSettings();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Color? textColor = Colors.white.withOpacity(0.95);
     return BlocListener<SettingsCubit, SettingsState>(
       listener: (context, state) {
         if (state is AppSettings) {
@@ -51,30 +49,38 @@ class _LocationViewState extends State<LocationView> {
             child: MapInPlaceItem(
               lat: widget.location!.lat,
               lon: widget.location!.lon,
-              leading: Icon(Icons.location_pin, size: 35, color: Colors.black),
+              opacity: 0.3,
+              leading: Icon(Icons.location_pin, size: 35, color: appThemeColor),
               title: Text(
                 "Current Location",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: textColor),
               ),
-              color: Colors.blueGrey,
+              color: Colors.transparent,
               children: [
                 Text(
                   widget.location!.fulladdress ?? "Unknown",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: textColor),
                 ),
               ],
             ),
           ),
           ListTile(
             contentPadding: EdgeInsets.all(16),
-            leading: Icon(
-              Icons.person_pin_circle_outlined,
-              color: appThemeColor,
-              size: 35,
+            leading: Container(
+              padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              child: Icon(
+                Icons.person_pin_circle_outlined,
+                color: appThemeColor.withOpacity(0.95),
+                size: 30,
+              ),
             ),
-            subtitle: Text("Allow Tracking Your Location"),
+            subtitle: Text("Share your location for emergency tracking"),
             title: Text(
-              "Monitor Live Action",
+              "Live Location Tracking",
               style: TextStyle(letterSpacing: 0.5, fontWeight: FontWeight.w400),
             ),
             trailing: Switch(
@@ -104,37 +110,36 @@ class _LocationViewState extends State<LocationView> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(PaddingConstants.md),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    (widget.status == "Unsafe" || widget.status == "Unknown")
-                        ? appThemeColor
-                        : Colors.green,
+          ListTile(
+            leading: Container(
+              padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              child: Icon(
+                Icons.health_and_safety_rounded,
+                color: userStatus ?Colors.green : appThemeColor,
+                size: 30,
               ),
-              onPressed:
-                  (widget.status == "Unsafe" || widget.status == "Unknown")
-                      ? () {
-                        BlocProvider.of<MapCubit>(context).markSafe("Safe");
-                      }
-                      : () {
-                        BlocProvider.of<MapCubit>(context).markSafe("Unsafe");
-                      },
-              child:
-                  (widget.status == "Unsafe" || widget.status == "Unknown")
-                      ? Column(
-                        children: [
-                          Text("You UnSafe"),
-                          Text("Click to Mark Yourself Safe"),
-                        ],
-                      )
-                      : Column(
-                        children: [
-                          Text("Marked Safe"),
-                          Text("Click to Mark Yourself Unsafe"),
-                        ],
-                      ),
+            ),
+            title: Text(
+              "I'm ${userStatus ? "Safe" : "NOT Safe"}",
+              style: TextStyle(letterSpacing: 0.5, fontWeight: FontWeight.w400),
+            ),
+            subtitle: Text("Let others know your status"),
+            trailing: Switch(
+              activeThumbColor: userStatus ?Colors.green : appThemeColor,
+              activeTrackColor: userStatus ?Colors.green.withOpacity(0.3) : appThemeColor.withOpacity(0.3),
+              value: userStatus,
+              onChanged: (value) {
+                setState(() {
+                  userStatus = value;
+                });
+                BlocProvider.of<MapCubit>(
+                  context,
+                ).markSafe(userStatus ? "Safe" : "Unsafe");
+              },
             ),
           ),
         ],

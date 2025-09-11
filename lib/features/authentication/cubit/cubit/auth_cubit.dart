@@ -6,6 +6,7 @@ import 'package:resq_map/core/services/urls.dart';
 
 import 'package:resq_map/features/authentication/model/auth_audit.dart';
 import 'package:resq_map/features/authentication/utils/auth_service.dart';
+import 'package:resq_map/features/home/settings_service.dart';
 
 part 'auth_state.dart';
 
@@ -93,7 +94,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logOut() async {
-    emit(AuthLoading());
+    emit(AuthLogOutLoading());
     try {
       var refresh = await AuthService.getRefreshToken();
       var token = await AuthService.getAuthToken();
@@ -105,6 +106,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (response["status"] == "200") {
         await FirebaseNotificationService.unSubscribeFromTopic('alert');
         await AuthService.clearAllData();
+        await SettingsService.clearAllData();
         emit(AuthLogedOut());
       } else {
         emit(AuthError(msg: response["body"]["error"]));

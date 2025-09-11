@@ -32,7 +32,9 @@ class RAppBar extends StatelessWidget implements PreferredSizeWidget {
         flexibleSpace: bottom ,
         title: title!=null ? Text(
           title!,
-          
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w400),
         ) : widgetTitle,
         centerTitle: centerTitle,
         backgroundColor: appThemeColor,

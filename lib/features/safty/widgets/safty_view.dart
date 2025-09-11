@@ -30,6 +30,7 @@ class _SaftyViewState extends State<SaftyView> {
   @override
   Widget build(BuildContext context) {
     return Column(
+     
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -59,31 +60,33 @@ class _SaftyViewState extends State<SaftyView> {
             ),
           ),
         if (widget.mySafty.isNotEmpty)
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.mySafty.length,
-            itemBuilder:
-                (context, index) => UserStatusItem(
-                  photo: widget.mySafty[index].photos!,
-                  status: widget.mySafty[index].status ?? "Unknown",
-                  subtitle:
-                      widget.mySafty[index].isOnline
-                          ? "Online"
-                          : widget.mySafty[index].lastSeen ?? "Unknown",
-                  lastName: widget.mySafty[index].lastName,
-                  firstName: widget.mySafty[index].firstName,
-                  showLocationAsText: true,
-                  locationText: widget.mySafty[index].location!.fulladdress,
-                  action: IconButton(
-                    onPressed: () {
-                      BlocProvider.of<SaftyCubit>(context).removeFromMySafty(
-                        user: widget.mySafty[index],
-                        users: widget.mySafty,
-                      );
-                    },
-                    icon: Icon(Icons.remove_circle_outline),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.mySafty.length,
+              itemBuilder:
+                  (context, index) => UserStatusItem(
+                    photo: widget.mySafty[index].photos!,
+                    status: widget.mySafty[index].status ?? "Unknown",
+                    subtitle:
+                        widget.mySafty[index].isOnline
+                            ? "Online"
+                            : widget.mySafty[index].lastSeen ?? "Unknown",
+                    lastName: widget.mySafty[index].lastName,
+                    firstName: widget.mySafty[index].firstName,
+                    showLocationAsText: true,
+                    locationText: widget.mySafty[index].location!.fulladdress,
+                    action: IconButton(
+                      onPressed: () {
+                        BlocProvider.of<SaftyCubit>(context).removeFromMySafty(
+                          user: widget.mySafty[index],
+                          users: widget.mySafty,
+                        );
+                      },
+                      icon: Icon(Icons.remove_circle_outline),
+                    ),
                   ),
-                ),
+            ),
           ),
       ],
     );

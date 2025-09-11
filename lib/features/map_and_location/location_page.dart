@@ -24,6 +24,7 @@ class _LocationPageState extends State<LocationPage> {
 
   @override
   void initState() {
+    
     _refreshData();
     super.initState();
   }
@@ -67,12 +68,10 @@ class _LocationPageState extends State<LocationPage> {
             return LoadingAnimation();
           }
           if (state is MapUserInfo) {
-            status =
-                (state.userStatus.status == "Safe" ||
-                    state.userStatus.status == "Rescued");
+         
             return LocationView(
               location: state.userStatus.location,
-              status: status ? "Safe" : "Unsafe",
+              status: state.userStatus.status,
             );
           }
           if (state is MapError) {

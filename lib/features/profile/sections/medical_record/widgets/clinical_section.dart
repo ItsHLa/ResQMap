@@ -27,7 +27,7 @@ class _ClinicalSectionState extends State<ClinicalSection> {
                 widget.title!,
                 style: const TextStyle(
                   letterSpacing: 1,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

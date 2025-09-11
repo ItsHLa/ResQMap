@@ -93,8 +93,4 @@ class _SplashBodyState extends State<SplashBody>
   }
 }
 
-/*
-  late AnimationController animationController; //generate numbers between 0-1
-  late Animation<Offset> animation; //to customize the duration of animation (generate values between 0-60)
-  SingleTickerProviderStateMixin // responsible of the animation  during the duration
-*/
+

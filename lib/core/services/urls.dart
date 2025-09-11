@@ -1,7 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
-const baseUrlHttps = "https://resq-zqbn.onrender.com";
-const baseUrlWss = 'wss://resq-zqbn.onrender.com';
+// const baseUrlHttps = "https://resq-zqbn.onrender.com";
+// const baseUrlWss = 'wss://resq-zqbn.onrender.com';
+
+const baseUrlHttps = "https://resqserver.up.railway.app";
+const baseUrlWss = 'wss://resqserver.up.railway.app';
 
 abstract class Urls {
   // News
@@ -18,12 +21,12 @@ abstract class Urls {
       "$baseUrlHttps/api/alerts/users/damaged/mark/";
 
   // Auth
-  static const SIGN_UP_URL = '$baseUrlHttps/api/auth/signup/emergency/';
+  static const SIGN_UP_URL = 'https://resq-zqbn.onrender.com/api/auth/signup/emergency/';
   static const LOGIN_URL = '$baseUrlHttps/api/auth/login/';
   static const LOG_OUT_URL = '$baseUrlHttps/api/auth/logout/';
-  static const REQUEST_RESET_URL = "$baseUrlHttps/api/auth/otp/generate/reset/";
-  static const RESET_COMPLETE_URL = "$baseUrlHttps/api/auth/password/reset/";
-  static const VERIFY_EMAIL_URL = "$baseUrlHttps/api/auth/otp/generate/signup/";
+  static const REQUEST_RESET_URL = "https://resq-zqbn.onrender.com/api/auth/otp/generate/reset/";
+  static const RESET_COMPLETE_URL = "https://resq-zqbn.onrender.com/api/auth/password/reset/";
+  static const VERIFY_EMAIL_URL = "https://resq-zqbn.onrender.com/api/auth/otp/generate/signup/";
   static const GET_TEAM_SKILLS_URL =
       "$baseUrlHttps/api/profiles/team/skills/get/";
   static const POST_TEAM_SKILLS_URL =

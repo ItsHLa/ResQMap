@@ -42,11 +42,7 @@ class _UserHealthRecordPageState extends State<UserHealthRecordPage> {
           );
         }
         if (state is ProfileLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator()),
-          );
+          AppActions.showLoadingDialog(context);
         }
       },
 

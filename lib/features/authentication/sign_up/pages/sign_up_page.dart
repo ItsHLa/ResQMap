@@ -15,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthEmailVerify) {

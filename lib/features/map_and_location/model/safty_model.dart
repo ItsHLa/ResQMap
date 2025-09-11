@@ -6,6 +6,8 @@ class SaftyModel {
 
   SaftyModel({required this.status, required this.location});
 
+  
+
   factory SaftyModel.toJson(Map<String, dynamic> json) {
     return SaftyModel(
       status: json["status"] ?? "Unknown",

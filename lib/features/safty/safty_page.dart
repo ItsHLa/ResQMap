@@ -39,7 +39,7 @@ class _SaftyPageState extends State<SaftyPage> {
           });
           Navigator.of(context).pop();
           AppActions.showSnackBar(
-            title: "Added To Safty Successfuly!",
+            title: "Added To Safety Successfuly!",
             context: context,
           );
         }
@@ -49,7 +49,7 @@ class _SaftyPageState extends State<SaftyPage> {
           });
           Navigator.of(context).pop();
           AppActions.showSnackBar(
-            title: "Delete To Safty Successfuly!!",
+            title: "Delete To Safety Successfuly!!",
             context: context,
           );
         }
@@ -79,7 +79,7 @@ class _SaftyPageState extends State<SaftyPage> {
         }
         return Scaffold(
           appBar: RAppBar(
-            title: "Safty NetWork",
+            title: "Safety Network",
             
             actions: [Icon(Icons.safety_check_outlined, size: 30)],
           ),

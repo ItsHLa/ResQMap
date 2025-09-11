@@ -84,6 +84,7 @@ class _SignUpViewState extends State<SignUpView> {
                 "Let's Create Your Account!",
                 textAlign: TextAlign.center,
                 style: TextStyles.textStyle18.copyWith(
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),

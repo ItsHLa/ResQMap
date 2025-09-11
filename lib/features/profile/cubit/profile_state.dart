@@ -6,7 +6,9 @@ sealed class ProfileState {}
 final class ProfileInitial extends ProfileState {}
 
 final class ProfileLoading extends ProfileState {}
+
 final class ProfileLoadingTeamSkills extends ProfileState {}
+
 final class ProfileLoadedTeamSkills extends ProfileState {
   final List<EmergencyTeam> skills;
 
@@ -15,7 +17,17 @@ final class ProfileLoadedTeamSkills extends ProfileState {
 
 final class UpdateUserInfoProfileSuccess extends ProfileState {}
 
-final class ProfileTeamSkillsPostSuccess extends ProfileState {}
+final class TeamSkillsLoading extends ProfileState {}
+
+final class ProfileTeamSkillsPostSuccess extends ProfileState {
+  final bool edit;
+  final List<String>? skills;
+
+  ProfileTeamSkillsPostSuccess({ this.edit = false,  this.skills});
+  
+}
+
+
 
 final class UpdatePersonalInfoProfileSuccess extends ProfileState {
   final MedicalRecord record;

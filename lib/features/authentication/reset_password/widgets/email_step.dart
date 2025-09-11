@@ -28,6 +28,7 @@ class _EmailStepViewState extends State<EmailStepView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(PaddingConstants.lg),
         child: SingleChildScrollView(
@@ -39,7 +40,9 @@ class _EmailStepViewState extends State<EmailStepView> {
               const SizedBox(height:PaddingConstants.md),
               const Text(
                 'Reset Your Password',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24, fontWeight: FontWeight.bold),
               ),
                SizedBox(height : PaddingConstants.md),
               const Text(

@@ -18,8 +18,9 @@ class TeamCard extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
+        
         contentPadding: EdgeInsets.all(8),
-        leading: isSelected ? Icon(Icons.check, color: Colors.green,) : Icon(Icons.emergency, color: appThemeColor,),
+        leading: isSelected ? Icon(Icons.check, size: 35, color: Colors.green,) : Icon(Icons.emergency,  size: 35,color: appThemeColor,),
         selected: isSelected,
         selectedColor: Colors.green,
         title: Text(team.teamName, style:

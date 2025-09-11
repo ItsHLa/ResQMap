@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resq_map/core/constants/constants.dart';
+import 'package:resq_map/core/constants/text_styles.dart';
 import 'package:resq_map/features/profile/cubit/profile_cubit.dart';
 import 'package:resq_map/features/profile/model/user.dart';
+import 'package:resq_map/features/profile/sections/about/pages/edit_team_skills.dart';
 import 'package:resq_map/features/profile/sections/about/widget/image_picker.dart';
 import 'package:resq_map/features/profile/widgets/info_fields.dart';
 import 'package:resq_map/features/profile/sections/about/widget/skill_section.dart';
-
-import '../../../../authentication/sign_up/pages/team_skills_page.dart';
 
 class AboutPageView extends StatefulWidget {
   final User user;
@@ -19,23 +19,34 @@ class AboutPageView extends StatefulWidget {
     super.key,
     required this.user,
     required this.email,
-    required this.phoneNumber, required this.userName,
+    required this.phoneNumber,
+    required this.userName,
   });
   @override
   State<AboutPageView> createState() => _AboutPageViewState();
 }
 
 class _AboutPageViewState extends State<AboutPageView> {
+  List? skills;
+  @override
+  void initState() {
+    skills = widget.user.skills;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('About', style: const TextStyle(
+        title: Text(
+          'About',
+          style: const TextStyle(
             color: softWhite,
             letterSpacing: 0.1,
             fontWeight: FontWeight.w300,
-          ),),
+          ),
+        ),
         elevation: 1,
       ),
       body: Padding(
@@ -61,7 +72,7 @@ class _AboutPageViewState extends State<AboutPageView> {
                             title: "email",
                             controller: [widget.email],
                             onSave: () {
-                              print(widget.email.text);
+                             
                               BlocProvider.of<ProfileCubit>(
                                 context,
                               ).updateUserData({"email": widget.email.text});
@@ -88,7 +99,7 @@ class _AboutPageViewState extends State<AboutPageView> {
                             title: "Phone Number",
                             controller: [widget.phoneNumber],
                             onSave: () {
-                              print(widget.phoneNumber.text);
+                            
                               BlocProvider.of<ProfileCubit>(
                                 context,
                               ).updateUserData({
@@ -117,7 +128,7 @@ class _AboutPageViewState extends State<AboutPageView> {
                             title: "Username",
                             controller: [widget.userName],
                             onSave: () {
-                              print(widget.userName.text);
+                             
                               BlocProvider.of<ProfileCubit>(
                                 context,
                               ).updateUserData({
@@ -132,7 +143,16 @@ class _AboutPageViewState extends State<AboutPageView> {
               ),
 
               _buildSectionHeader(title: 'Skills', showAdd: true),
-              SkillSection(skill: widget.user.skills),
+              BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileTeamSkillsPostSuccess) {
+                    skills = state.skills;
+                    
+                  }
+                  return SkillSection(skill: skills!);
+               
+                },
+              ),
               SizedBox(height: 20),
             ],
           ),
@@ -141,25 +161,30 @@ class _AboutPageViewState extends State<AboutPageView> {
     );
   }
 
-  Widget _buildSectionHeader({required String title, bool showAdd  = false}) {
+  Widget _buildSectionHeader({required String title, bool showAdd = false}) {
     return Row(
       children: [
         Text(
           title.toUpperCase(),
-          style: TextStyle(
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.w300,
-                    ),
+          style: TextStyles.textStyle16.copyWith(
+            letterSpacing: 1,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         Spacer(),
-        if(showAdd)
-           IconButton(onPressed: (){
-             Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeamSkillsPage(
-              showBackArrow: true,
-             ),));
-           },
-               iconSize: 35,
-               icon: Icon(Icons.add))
+        if (showAdd)
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder:
+                      (context) => EditTeamSkills(skills: widget.user.skills),
+                ),
+              );
+            },
+            iconSize: 35,
+            icon: Icon(Icons.add , color: Colors.red[700],),
+          ),
       ],
     );
   }
@@ -171,6 +196,7 @@ class _AboutPageViewState extends State<AboutPageView> {
     Widget? trailing,
   }) {
     return ListTile(
+      
       trailing: trailing,
       contentPadding: EdgeInsets.zero,
       leading: Icon(icon, color: Colors.red[700]),

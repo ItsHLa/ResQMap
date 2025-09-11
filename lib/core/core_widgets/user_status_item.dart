@@ -12,8 +12,8 @@ class UserStatusItem extends StatefulWidget {
     required this.lastName,
     this.action,
     this.typeStatus = true,
-    this.showLocationAsText = false, 
-    this.locationText, 
+    this.showLocationAsText = false,
+    this.locationText,
   });
 
   final String photo;
@@ -106,7 +106,7 @@ class _UserStatusItemState extends State<UserStatusItem> {
             child: Container(
               padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: _getStatusColor()!.withOpacity(0.6),
+                color: _getStatusColor()!.withOpacity(0.95),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: _getStatusIcon(),
@@ -139,7 +139,11 @@ class _UserStatusItemState extends State<UserStatusItem> {
     if (!widget.typeStatus) return null;
     return Text(
       widget.status,
-      style: TextStyle(color: Colors.white, fontSize: 8),
+      style: TextStyle(
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
+        fontSize: 8,
+      ),
     );
   }
 
@@ -150,7 +154,13 @@ class _UserStatusItemState extends State<UserStatusItem> {
 
     return Text(
       subtitleText,
-      style:  TextStyle(color:subtitleText == "Online" ? Colors.green.withOpacity(0.8): Colors.blueGrey, fontSize: 12),
+      style: TextStyle(
+        color:
+            subtitleText == "Online"
+                ? Colors.green.withOpacity(0.8)
+                : Colors.blueGrey,
+        fontSize: 12,
+      ),
       overflow: TextOverflow.ellipsis,
     );
   }

@@ -91,7 +91,9 @@ abstract class GeolocatorService {
 
   /// Gets the current position.
   static Future<Position> getLocation() async {
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.bestForNavigation
+    );
   }
 
   /// Gets the last known position.

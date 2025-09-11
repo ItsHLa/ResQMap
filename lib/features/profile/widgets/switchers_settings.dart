@@ -14,7 +14,7 @@ class SwitchersSettings extends StatefulWidget {
 }
 
 class _SwitchersSettingsState extends State<SwitchersSettings> {
-  List<String> switches = ["Dark Mode", "Track My Location"];
+  List<String> switches = ["Dark Mode", "Live Location Tracking"];
 
   List<IconData> switchersIcons = [
     Icons.dark_mode,

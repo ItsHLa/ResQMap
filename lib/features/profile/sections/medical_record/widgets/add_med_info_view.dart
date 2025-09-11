@@ -34,11 +34,20 @@ class _MedicalRecordInfoFieldsState extends State<MedicalRecordInfoFields> {
             ),
       ),
       body:  InfoFields(
+        maxLength: [null,4,null, 5,null],
+        keyboardType: [
+          TextInputType.name,
+          TextInputType.number,
+          TextInputType.name,
+          TextInputType.name,
+          TextInputType.name,
+        ],
         title: "Enter Your Medical Details: ",
         physics: NeverScrollableScrollPhysics(),
           onSave: widget.onSave,
           controller: widget.activeProblemNMedicationController,
           labels:widget.labels,
+
         ),
       
       

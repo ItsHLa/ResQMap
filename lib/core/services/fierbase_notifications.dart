@@ -58,7 +58,7 @@ class FirebaseNotificationService {
       badge: true,
       sound: true,
     );
-    print('Notification permissions: ${settings.authorizationStatus}');
+  
   }
 
   static Future<void> subscribeToTopic(String topic) async {

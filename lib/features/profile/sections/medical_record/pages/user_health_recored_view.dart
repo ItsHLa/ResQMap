@@ -7,7 +7,8 @@ import 'package:resq_map/features/profile/model/medical_record.dart';
 import 'package:resq_map/features/profile/sections/medical_record/pages/add_med_info_page.dart';
 import 'package:resq_map/features/profile/sections/medical_record/widgets/clinical_item.dart';
 import 'package:resq_map/features/profile/sections/medical_record/widgets/clinical_section.dart';
-import 'package:resq_map/features/profile/widgets/info_fields.dart';
+import 'package:resq_map/features/profile/sections/medical_record/widgets/select_blood_type_view.dart';
+
 
 class UserHealthRecordView extends StatefulWidget {
   const UserHealthRecordView({super.key, required this.record});
@@ -51,16 +52,8 @@ class _UserHealthRecordPageState extends State<UserHealthRecordView> {
             ]
             : widget.record.medications)!;
     List<Widget> onAddPress = [
-      InfoFields(
-        onSave: () {
-          BlocProvider.of<ProfileCubit>(context).addPersonalData(
-            bloodType: bloodTypeController.text,
-            record: widget.record,
-          );
-        },
-        controller: [bloodTypeController],
-        title: "Add Your Blood Type",
-        labels: ["Blood type"],
+      SelectBloodTypeView(
+        record: widget.record,
       ),
       AddMedInfoPage(record: widget.record),
     ];
@@ -91,9 +84,13 @@ class _UserHealthRecordPageState extends State<UserHealthRecordView> {
           return ClinicalItem(
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => UpdateMedInfoPage(
-                  index: index,
-                  record: widget.record),)
+                MaterialPageRoute(
+                  builder:
+                      (context) => UpdateMedInfoPage(
+                        index: index,
+                        record: widget.record,
+                      ),
+                ),
               );
             },
             onDelete: () {
@@ -132,13 +129,7 @@ class _UserHealthRecordPageState extends State<UserHealthRecordView> {
               title: headers[index].toUpperCase(),
               items: items[index],
               onPressedAdd: () {
-                index == 0
-                    ? showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => onAddPress[index],
-                    )
-                    : Navigator.of(context).push(
+                 Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => onAddPress[index],
                       ),

@@ -4,6 +4,7 @@ import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/models/alert_model.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/pages/damaged_user_page.dart';
 import 'package:resq_map/features/earthquake/quacke_alerts/pages/team_status_page.dart';
+import 'package:resq_map/features/earthquake/quacke_alerts/widgets/team_page_views.dart';
 import 'package:resq_map/features/map_and_location/widget/route.dart';
 
 class AlertItem extends StatelessWidget {
@@ -85,12 +86,25 @@ class AlertItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "LOCATION",
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        letterSpacing: 1,
-                        color: Colors.blueGrey,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          "LOCATION",
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            letterSpacing: 1,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        Spacer(),
+                        // Distance
+                        _buildMetadataItem(
+                          Icons.near_me,
+                          alert.location?.distance != null
+                              ? '${alert.location!.distance!.toStringAsFixed(1)} km'
+                              : '-- km',
+                          theme,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -103,19 +117,26 @@ class AlertItem extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 12),
 
               // Tags section - displayed as chips below location
               ...buildTag(dangerColor),
+
               // Metadata row
+
+              // Affected count
+              // _buildMetadataItem(
+              //   Icons.people,
+              //   '${alert.totalDamagedUsers ?? 0} members in team',
+              //   theme,
+              // ),
               Row(
                 children: [
-                  // Distance
+                  // Affected count
                   _buildMetadataItem(
-                    Icons.near_me,
-                    alert.location?.distance != null
-                        ? '${alert.location!.distance!.toStringAsFixed(1)} km'
-                        : '-- km',
+                    Icons.report,
+                    '${alert.totalReportsCount ?? 0} reports',
                     theme,
                   ),
 
@@ -147,6 +168,7 @@ class AlertItem extends StatelessWidget {
               // Action buttons
               Row(
                 children: [
+                  IconButton(onPressed: ()=>_navigateToMap(context), icon: Icon(Icons.route, color:  dangerColor,)),
                   Expanded(
                     child: OutlinedButton.icon(
                       icon: Icon(Icons.people, size: 18, color: dangerColor),
@@ -164,14 +186,14 @@ class AlertItem extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton.icon(
-                      icon: Icon(Icons.map, size: 18),
-                      label: Text('View Map'),
+                      icon: Icon(Icons.group, size: 18),
+                      label: Text('Squad List'),
                       style: FilledButton.styleFrom(
                         backgroundColor: dangerColor,
                         foregroundColor: softWhite,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      onPressed: () => _navigateToMap(context),
+                      onPressed: () => _navigateToTeamPage(context),
                     ),
                   ),
                 ],
@@ -191,7 +213,9 @@ class AlertItem extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           text,
-          style: theme.textTheme.bodySmall?.copyWith(color: Colors.blueGrey),
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.w500,
+            color: Colors.blueGrey),
         ),
       ],
     );
@@ -199,9 +223,23 @@ class AlertItem extends StatelessWidget {
 
   void _navigateToTeamStatus(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => TeamStatusPage(
-        locationId: alert.location!.id!,
-        id: alert.id!)),
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                TeamStatusPage(locationId: alert.location!.id!, id: alert.id!),
+      ),
+    );
+  }
+
+  void _navigateToTeamPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                TeamPageView(
+                  alert:alert,
+                ),
+      ),
     );
   }
 

@@ -18,8 +18,8 @@ class News {
   factory News.fromJson(Map<String, dynamic> json) {
     List time = json["time"].split(",");
     return News(
-      lat: json["lat"],
-      lon: json["lon"],
+      lat: json["lat"].toDouble(),
+      lon: json["lon"].toDouble(),
       mag: json["mag"].toDouble(),
       depth: json["depth"].toDouble(),
       place: json["place"],

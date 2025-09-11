@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:meta/meta.dart';
 import 'package:resq_map/core/services/geolocator_service.dart';
 import 'package:resq_map/core/services/http.dart';
@@ -38,8 +39,8 @@ class MapCubit extends Cubit<MapState> {
     try {
       String? token = await AuthService.getAuthToken();
       Position start = await GeolocatorService.getLocation();
-      print(start.latitude.toStringAsFixed(4));
-      print(start.longitude.toStringAsFixed(4));
+      print(start.latitude);
+      print(start.longitude);
       var response = await HttpService.post(
         token: token,
         uri: routeUrl,
@@ -48,7 +49,8 @@ class MapCubit extends Cubit<MapState> {
             "lat": start.latitude.toStringAsFixed(4),
             "lon": start.longitude.toStringAsFixed(4),
           },
-          "end": {"lat": lat.toStringAsFixed(4), "lon": lon.toStringAsFixed(4)},
+
+          "end": {"lat": lat, "lon": lon},
         },
       );
 
@@ -94,8 +96,8 @@ class MapCubit extends Cubit<MapState> {
 
   Future<void> trackLocation({required Position position}) async {
     String? token = await AuthService.getAuthToken();
-    final lat = position.latitude.toStringAsFixed(6);
-    final lon = position.longitude.toStringAsFixed(6);
+    final lat = position.latitude;
+    final lon = position.longitude;
 
     print(lat);
     print(lon);

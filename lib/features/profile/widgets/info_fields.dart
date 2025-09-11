@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:resq_map/core/constants/constants.dart';
 import 'package:resq_map/core/constants/padding_constants.dart';
 import 'package:resq_map/core/constants/text_styles.dart';
 
@@ -8,14 +10,19 @@ class InfoFields extends StatefulWidget {
     required this.labels,
     required this.title,
     this.onSave,
-    required this.controller, this.physics,
+    required this.controller,
+    this.physics,
+    this.keyboardType,
+    this.maxLength
   });
   final List labels;
   final String title;
   final void Function()? onSave;
   final List<TextEditingController> controller;
   final ScrollPhysics? physics;
-
+  final List<TextInputType?>? keyboardType;
+  final List<int?>? maxLength;
+ 
   @override
   State<InfoFields> createState() => _InfoFieldsState();
 }
@@ -39,7 +46,7 @@ class _InfoFieldsState extends State<InfoFields> {
             Text(
               widget.title,
               style: TextStyles.textStyle18.copyWith(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w300,
               ),
             ),
             SizedBox(height: PaddingConstants.md),
@@ -58,6 +65,26 @@ class _InfoFieldsState extends State<InfoFields> {
                       ),
 
                       child: TextFormField(
+                        
+                       buildCounter: (BuildContext context, 
+                { required int currentLength, 
+                  required bool isFocused, 
+                  required int? maxLength }) {
+    return maxLength !=null ? Text(
+      '$currentLength / $maxLength',
+      style: TextStyle(
+        color: currentLength == maxLength ? Colors.red : Colors.grey,
+        fontSize: 12,
+      ),
+    ): null;
+  },
+                        maxLength: widget.maxLength != null
+                                ? widget.maxLength![index]
+                                : null,
+                        keyboardType:
+                            widget.keyboardType != null
+                                ? widget.keyboardType![index]
+                                : null,
                         validator:
                             (value) =>
                                 value == null || value.isEmpty
@@ -70,6 +97,7 @@ class _InfoFieldsState extends State<InfoFields> {
                         },
                         controller: widget.controller[index],
                         decoration: InputDecoration(
+                          
                           label: Text(widget.labels[index]),
                         ),
                       ),

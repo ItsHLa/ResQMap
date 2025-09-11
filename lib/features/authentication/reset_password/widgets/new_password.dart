@@ -33,7 +33,9 @@ class _NewPasswordViewState extends State<NewPasswordView> {
             SizedBox(height: 24),
             Text(
               'Create New Password',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             Text(

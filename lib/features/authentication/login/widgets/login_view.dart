@@ -63,11 +63,14 @@ class _LoginViewState extends State<LoginView> {
                   const Text(
                     'Welcome back!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Sign in to continue',
+                    
                     textAlign: TextAlign.start,
                     style: TextStyles.textStyle14.copyWith(
                       color: Colors.grey.shade600,
