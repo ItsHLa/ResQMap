@@ -1,0 +1,53 @@
+HLa Nissani Public License - Version 1.1  
+Sale and Commercial Use Strictly Prohibited  
+
+Copyright (c) 2024-2025 HLa Nissani. All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+and associated documentation files (the "Software"), to use, copy, modify, merge, publish, 
+distribute, and create derivative works of the Software, subject to the following conditions:
+
+1. Attribution and Notice of Origin:
+   - All copies or substantial portions of the Software, including derivative works or forks, 
+     must include this copyright notice and this license.
+   - The origin must be clearly stated in all forks or derivative works as follows:  
+     "Derived from the original resq-map and backend by HLa Nissani in the resq-training 
+      project and its forks."
+   - Any attempt to remove, alter, or replace this license is invalid and does not relieve 
+     the user from complying with its terms.
+
+2. Prohibition of Sale and Commercial Use:
+   - The sale, resale, licensing, renting, or any commercial exploitation of this Software or 
+     its derivative works (forks) is strictly prohibited without explicit, written permission 
+     from HLa Nissani.
+   - Use of this Software or its derivatives in any commercial service or product is prohibited 
+     unless a separate commercial license is granted by HLa Nissani.
+
+3. Requirements for Derivative Works (Forks):
+   - Any fork or derivative work must remain public and available under this same license.
+   - All derivative works must clearly state in their description:  
+     "Derived from the original resq-map and backend by HLa Nissani" and provide a direct link 
+     to the original repository.
+   - This license must remain intact and visible in all forks.
+
+4. No Warranty:
+   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+     INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+     PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL HLa Nissani OR CONTRIBUTORS BE LIABLE 
+     FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE.
+
+5. Trademarks:
+   - This license does not grant any rights to use the names, logos, or trademarks of 
+     HLa Nissani or the `resq-map-backend` project. Use of these marks for endorsement or 
+     promotion of derivative works is prohibited without prior written permission.
+
+6. Reservation of Rights:
+   - HLa Nissani reserves all rights not expressly granted in this license.
+   - HLa Nissani reserves the right to grant exceptional commercial licenses under 
+     separate agreements.
+   - Any violation of these terms will result in the immediate termination of the granted rights.
+   - Legal action may be taken against any violation of these terms.
+
+This license is governed by and interpreted in accordance with international copyright 
+treaties, including the Berne Convention.
